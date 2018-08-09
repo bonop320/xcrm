@@ -1,5 +1,7 @@
 const PouchDB = require('pouchdb')
 
+const findPlugin = require('pouchdb-find')
+
 const getenv = require('getenv')
 
 // Settings
@@ -8,12 +10,19 @@ const HOST = getenv('COUCHDB_URL', 'http://localhost:5984')
 
 //
 
-module.exports = (opts = {}) => {
+const urlFor = (opts = {}) => {
   const { host = HOST, name } = opts
+  return `${host}/${name}`
+}
 
-  const url = `${host}/${name}`
+//
 
-  const db = new PouchDB(url)
+PouchDB.plugin(findPlugin)
+
+//
+
+module.exports = opts => {
+  const db = new PouchDB(urlFor(opts))
 
   function pouchdb (ctx, next) {
     ctx.db = db
