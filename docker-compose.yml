@@ -8,3 +8,14 @@ services:
     image: couchdb
     ports:
       - "5984:5984"
+
+  api:
+    build: ./containers/api-server
+    ports:
+      - "80:80"
+    links:
+      - couchdb
+    environment:
+      - ENV=production
+      - COUCHDB_URL=http://couchdb:5984
+      - NODE_PORT=80

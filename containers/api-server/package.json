@@ -2,7 +2,9 @@
   "name": "@xcrm/api-server",
   "version": "0.0.1",
   "scripts": {
-    "test": "ava -vws"
+    "test": "ava -vws",
+    "start": "pm2 start",
+    "dev": "pm2-dev ecosystem.config.js"
   },
   "devDependencies": {
     "ava": "^0.25.0",
