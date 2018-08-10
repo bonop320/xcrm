@@ -8,12 +8,12 @@ Vue.use(Router)
 const routes = [
   {
     path: '/',
-    redirect: { name: 'products' }
+    redirect: { name: 'ViewProducts' }
   },
 
   {
     path: '/products',
-    name: 'products',
+    name: 'ViewProducts',
     component: Products
   }
 ]
