@@ -2,16 +2,8 @@
 div
   h1 Products
 
-  ul(v-if="products")
-    li(v-for="product of products")
-      router-link(to="#")
-        | {{ product.name }}
+  product-list(:products="products")
+
 </template>
 
 <script src="./main.js"></script>
-
-<style>
-div {
-  display: block;
-}
-</style>

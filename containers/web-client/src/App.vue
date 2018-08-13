@@ -1,6 +1,7 @@
 <template lang="pug">
-div#app
-  router-view
+el-container#app
+  el-main
+    router-view
 </template>
 
 <script>
@@ -17,7 +18,10 @@ export default {
   -moz-osx-font-smoothing: grayscale;
   text-align: center;
   color: #2c3e50;
+  max-width: 960px;
   margin-top: 60px;
+  margin-left: auto;
+  margin-right: auto;
 }
 
 h1, h2 {
