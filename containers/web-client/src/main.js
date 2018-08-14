@@ -11,6 +11,7 @@ import App from './App.vue'
 
 Vue.use(ElementUI, { locale })
 
+// eslint-disable-next-line
 new Vue({
   el: '#app',
   render: h => h(App),
