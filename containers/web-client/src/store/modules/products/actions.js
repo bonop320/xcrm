@@ -16,6 +16,19 @@ function fetchAll (ctx) {
     .then(commit)
 }
 
+function createOne (ctx, body) {
+  const commit = data => {
+    ctx.commit('PUT_ONE', data)
+    return data
+  }
+
+  return request
+    .post('/', body)
+    .then(res => res.data)
+    .then(commit)
+}
+
 export {
-  fetchAll
+  fetchAll,
+  createOne
 }

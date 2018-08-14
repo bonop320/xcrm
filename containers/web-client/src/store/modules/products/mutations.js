@@ -7,6 +7,11 @@ function SET_ALL (state, arr) {
   arr.forEach(setOne)
 }
 
+function PUT_ONE (state, data) {
+  Vue.set(state, data._id, data)
+}
+
 export {
-  SET_ALL
+  SET_ALL,
+  PUT_ONE
 }
