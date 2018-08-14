@@ -20,6 +20,17 @@ module.exports = {
     notifyOnErrors: true,
     poll: false, // https://webpack.js.org/configuration/dev-server/#devserver-watchoptions-
 
+    proxyTable: {
+      // proxy all requests starting with /api to jsonplaceholder
+      '/api': {
+        target: 'http://localhost:8080/',
+        changeOrigin: true,
+        pathRewrite: {
+          '^/api': ''
+        }
+      }
+    },
+
     // Use Eslint Loader?
     // If true, your code will be linted during bundling and
     // linting errors and warnings will be shown in the console.

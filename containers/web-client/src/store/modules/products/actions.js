@@ -1,19 +1,19 @@
-function fetchAll (ctx) {
-  const data = [
-    {
-      _id: '01CMFQ6Y0Z0X7NTPNX85ZFAP6B',
-      _rev: '1-7e5c4d4306e5ea21f0dea1db660305bb',
-      name: 'The Great Soviet Encyclopedia',
-      price: 100
-    }, {
-      _id: '01CMFQ6Y0Z0X7NTPNX85ZFAP6C',
-      _rev: '1-7e5c4d4306e5ea21f0dea1db660305cc',
-      name: 'The Ok Soviet Encyclopedia',
-      price: 80
-    }
-  ]
+import Axios from 'axios'
 
-  ctx.commit('SET_ALL', data)
+const request = Axios.create({
+  baseURL: '/api/products'
+})
+
+function fetchAll (ctx) {
+  const commit = arr => {
+    ctx.commit('SET_ALL', arr)
+    return arr
+  }
+
+  return request
+    .get('/')
+    .then(res => res.data)
+    .then(commit)
 }
 
 export {

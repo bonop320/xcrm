@@ -1,6 +1,7 @@
 <template lang="pug">
 el-row(:gutter="20")
   el-col(v-for="product in products"
+    :key="product._id"
     :span="8")
 
     product-list-item(
@@ -22,3 +23,9 @@ export default {
   }
 }
 </script>
+
+<style scoped>
+.el-col {
+  margin-bottom: 20px;
+}
+</style>
