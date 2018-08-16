@@ -10,12 +10,6 @@ div
     )
     el-input(type="number"
       v-model.number="price")
-  el-form-item(
-    label="Description"
-    )
-    el-input(type="textarea"
-      v-model="description")
-
 </template>
 
 <script>
@@ -51,8 +45,7 @@ const handleInputFor = key => {
 
 const computed = {
   name: handleInputFor('name'),
-  price: handleInputFor('price'),
-  description: handleInputFor('description')
+  price: handleInputFor('price')
 }
 
 export default {

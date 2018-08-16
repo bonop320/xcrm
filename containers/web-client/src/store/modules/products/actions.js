@@ -28,7 +28,22 @@ function createOne (ctx, body) {
     .then(commit)
 }
 
+function updateOne (ctx, body) {
+  const commit = data => {
+    ctx.commit('PUT_ONE', data)
+    return data
+  }
+
+  const uri = `/${body._id}`
+
+  return request
+    .put(uri, body)
+    .then(res => res.data)
+    .then(commit)
+}
+
 export {
   fetchAll,
-  createOne
+  createOne,
+  updateOne
 }

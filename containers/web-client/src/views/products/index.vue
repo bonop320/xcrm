@@ -8,15 +8,26 @@ div
       | Create
 
   el-dialog(
+    :visible.sync="isUpdating"
+    @closed="closedUpdateModal")
+    el-form
+      product-form-fields(v-model="activeProduct")
+      el-form-item
+        el-button(@click="submitUpdate")
+          | Submit
+
+  el-dialog(
     :visible.sync="isCreating"
     @closed="closedCreateModal")
     el-form
-      product-form-fields(v-model="nextProduct")
+      product-form-fields(v-model="activeProduct")
       el-form-item
         el-button(@click="submitCreate")
           | Submit
 
-  product-list(:products="products")
+  product-list(
+    :products="products"
+    @edit="showUpdateModal")
 
 </template>
 

@@ -1,13 +1,14 @@
 import { mapGetters } from 'vuex'
 
 import ProductList from '@/components/product-list'
-import ProductFormFields from '@/components/product-fieldset'
+import ProductFormFields from '@/components/product-form-fields'
 
 import * as methods from './methods'
 
 const data = () => ({
   isCreating: false,
-  nextProduct: {}
+  isUpdating: false,
+  activeProduct: {}
 })
 
 const computed = mapGetters('products', {
@@ -15,7 +16,7 @@ const computed = mapGetters('products', {
 })
 
 function mounted () {
-  this.$store.dispatch('products/fetchAll')
+  this.fetchAll()
 }
 
 export default {
