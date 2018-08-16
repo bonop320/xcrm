@@ -4,15 +4,6 @@ const Router = require('koa-router')
 
 const getenv = require('getenv')
 
-const {
-  compose,
-  evolve,
-  pick,
-  prop,
-  assoc,
-  trim
-} = require('ramda')
-
 const busboy = require('../middlewares/busboy')
 
 //
@@ -35,7 +26,7 @@ const routerFor = name => {
 
 // Helpers
 
-function upload () {
+function create () {
 
   return async ctx => {
     const { request, db } = ctx
@@ -54,7 +45,7 @@ function install () {
   router
     .post('/',
       busboy(DEST),
-      upload())
+      create())
 
   return router.routes()
 }
