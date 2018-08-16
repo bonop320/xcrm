@@ -4,11 +4,12 @@
   "scripts": {
     "test": "ava -vws",
     "start": "pm2 start",
-    "dev": "pm2-dev ecosystem.config.js"
+    "dev": "nodemon server.js"
   },
   "devDependencies": {
     "ava": "^0.25.0",
     "axios": "^0.18.0",
+    "nodemon": "^1.18.3",
     "pm2": "^3.0.3"
   },
   "dependencies": {

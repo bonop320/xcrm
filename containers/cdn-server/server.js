@@ -20,6 +20,7 @@ const app = new Koa()
 app.use(logger())
 
 app.use(router())
+
 app.use(mount('/images', serve('./assets')))
 
 //
