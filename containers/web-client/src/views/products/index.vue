@@ -11,7 +11,11 @@ div
     :visible.sync="isUpdating"
     @closed="closedUpdateModal")
     el-form
-      product-form-fields(v-model="activeProduct")
+      el-row
+        el-col(:span="8")
+          product-form-image(v-model="activeProduct")
+        el-col(:span="16")
+          product-form-fields(v-model="activeProduct")
       el-form-item
         el-button(@click="submitUpdate")
           | Submit
@@ -20,7 +24,11 @@ div
     :visible.sync="isCreating"
     @closed="closedCreateModal")
     el-form
-      product-form-fields(v-model="activeProduct")
+      el-row
+        el-col(:span="8")
+          product-form-image(v-model="activeProduct")
+        el-col(:span="16")
+          product-form-fields(v-model="activeProduct")
       el-form-item
         el-button(@click="submitCreate")
           | Submit
