@@ -18,12 +18,21 @@ services:
       - COUCHDB_URL=http://couchdb:5984
       - NODE_PORT=80
 
+  web-client:
+    build: ./containers/web-client
+    volumes:
+      - www-volume:/usr/src/dist
+
   reverse-proxy:
-    image: ./containers/reverse-proxy
+    image: nginx
     ports:
       - "80:80"
     links:
       - api-server
     volumes:
+      - www-volume:/var/www
       - ./containers/reverse-proxy/conf.d:/etc/nginx/conf.d
     restart: always
+
+volumes:
+  www-volume: {}
