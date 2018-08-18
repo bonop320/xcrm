@@ -4,14 +4,10 @@ el-card.box-card(:body-style="{ padding: '0px' }")
     img.image(:src="imageUrl")
 
   el-row.card-body
-    el-col.card-content(:span="18")
+    el-col.card-content(:span="16")
       h3.name-tag {{ name }}
+    el-col.card-control(:span="8")
       span.price-tag {{ price }}
-    el-col.card-control(:span="6")
-      el-button(
-        icon="el-icon-edit"
-        circle
-        @click="emitEdit")
 
 </template>
 
@@ -30,16 +26,9 @@ const computed = {
   }
 }
 
-const methods = {
-  emitEdit () {
-    this.$emit('edit', this._id)
-  }
-}
-
 export default {
   name: 'product-list-item',
   props,
-  methods,
   computed
 }
 </script>

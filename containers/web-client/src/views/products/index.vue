@@ -9,24 +9,13 @@ div
 
   el-dialog(
     v-if="isCreating"
-    :visible.sync="isCreating"
-    @closed="closedCreateModal")
+    :visible.sync="isCreating")
       product-form(
         action="create"
         @submit="submitCreate")
 
-  el-dialog(
-    v-if="isUpdating"
-    :visible.sync="isUpdating"
-    @closed="closedUpdateModal")
-      product-form(
-        action="update"
-        :model="activeProduct"
-        @submit="submitUpdate")
-
   product-list(
-    :products="products"
-    @edit="showUpdateModal")
+    :products="products")
 
 </template>
 

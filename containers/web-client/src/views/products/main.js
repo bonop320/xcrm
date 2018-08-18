@@ -6,9 +6,7 @@ import ProductForm from '@/components/product-form'
 import * as methods from './methods'
 
 const data = () => ({
-  isCreating: false,
-  isUpdating: false,
-  activeProduct: {}
+  isCreating: false
 })
 
 const computed = mapGetters('products', {
