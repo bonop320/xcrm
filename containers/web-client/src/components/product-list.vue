@@ -8,7 +8,7 @@ el-row(:gutter="20")
       :_id="product._id"
       :name="product.name"
       :price="product.price"
-      @edit="emitEdit")
+      :image="product.image")
 </template>
 
 <script>
@@ -18,19 +18,12 @@ const props = {
   products: Array
 }
 
-const methods = {
-  emitEdit (_id) {
-    this.$emit('edit', _id)
-  }
-}
-
 export default {
   name: 'product-list',
   props,
   components: {
     ProductListItem
-  },
-  methods
+  }
 }
 </script>
 

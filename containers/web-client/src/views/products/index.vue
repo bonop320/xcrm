@@ -8,34 +8,14 @@ div
       | Create
 
   el-dialog(
-    :visible.sync="isUpdating"
-    @closed="closedUpdateModal")
-    el-form
-      el-row
-        el-col(:span="8")
-          product-form-image(v-model="activeProduct")
-        el-col(:span="16")
-          product-form-fields(v-model="activeProduct")
-      el-form-item
-        el-button(@click="submitUpdate")
-          | Submit
-
-  el-dialog(
-    :visible.sync="isCreating"
-    @closed="closedCreateModal")
-    el-form
-      el-row
-        el-col(:span="8")
-          product-form-image(v-model="activeProduct")
-        el-col(:span="16")
-          product-form-fields(v-model="activeProduct")
-      el-form-item
-        el-button(@click="submitCreate")
-          | Submit
+    v-if="isCreating"
+    :visible.sync="isCreating")
+      product-form(
+        action="create"
+        @submit="submitCreate")
 
   product-list(
-    :products="products"
-    @edit="showUpdateModal")
+    :products="products")
 
 </template>
 

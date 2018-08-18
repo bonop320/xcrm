@@ -4,53 +4,27 @@ div
     action="/cdn/images"
     :on-success="handleUploadSuccess"
     )
-    img.image(v-if="image"
+    img.image(v-if="value"
       :src="imageUrl")
     span.el-icon-plus.image-uploader-icon(v-else)
 </template>
 
 <script>
-import { prop, assoc } from 'ramda'
-import { stubObj } from 'ramda-adjunct'
-
-/*
-const FIELDS = [
-  'name',
-  'price',
-  'description'
-]
-*/
 
 const props = {
-  value: {
-    type: Object,
-    default: stubObj
-  }
-}
-
-const handleInputFor = key => {
-  return {
-    get () {
-      return prop(key, this.value)
-    },
-    set (value) {
-      const data = assoc(key, value, this.value)
-      this.$emit('input', data)
-    }
-  }
+  value: String
 }
 
 const computed = {
-  image: handleInputFor('image'),
   imageUrl () {
-    return `/cdn/images/${this.image}`
+    return `/cdn/images/${this.value}`
   }
 }
 
 const methods = {
   handleUploadSuccess (res, file) {
     const { image } = res
-    this.image = image
+    this.$emit('input', image)
   }
 }
 
