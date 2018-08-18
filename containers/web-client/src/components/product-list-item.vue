@@ -1,7 +1,7 @@
 <template lang="pug">
 el-card.box-card(:body-style="{ padding: '0px' }")
   div.image-holder
-    <!-- img.image(src="http://via.placeholder.com/350x350") -->
+    img.image(:src="imageUrl")
 
   el-row.card-body
     el-col.card-content(:span="18")
@@ -19,7 +19,15 @@ el-card.box-card(:body-style="{ padding: '0px' }")
 const props = {
   _id: String,
   name: String,
-  price: Number
+  price: Number,
+  image: String
+}
+
+const computed = {
+  imageUrl () {
+    const { image = 'none.jpg' } = this
+    return `/cdn/images/${image}`
+  }
 }
 
 const methods = {
@@ -31,7 +39,8 @@ const methods = {
 export default {
   name: 'product-list-item',
   props,
-  methods
+  methods,
+  computed
 }
 </script>
 

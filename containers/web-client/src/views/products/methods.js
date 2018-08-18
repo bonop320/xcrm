@@ -17,7 +17,7 @@ function showUpdateModal (_id) {
   this.isUpdating = true
 }
 
-function submitCreate () {
+function submitCreate (data) {
   const onSuccess = data => {
     this.isCreating = false
 
@@ -28,7 +28,7 @@ function submitCreate () {
   }
 
   this
-    .createOne(this.activeProduct)
+    .createOne(data)
     .then(onSuccess)
 }
 

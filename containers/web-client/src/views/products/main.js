@@ -1,8 +1,7 @@
 import { mapGetters } from 'vuex'
 
 import ProductList from '@/components/product-list'
-import ProductFormFields from '@/components/product-form-fields'
-import ProductFormImage from '@/components/product-form-image'
+import ProductForm from '@/components/product-form'
 
 import * as methods from './methods'
 
@@ -26,8 +25,7 @@ export default {
   computed,
   components: {
     ProductList,
-    ProductFormFields,
-    ProductFormImage
+    ProductForm
   },
   methods,
   mounted
