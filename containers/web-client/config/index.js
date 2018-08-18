@@ -28,6 +28,13 @@ module.exports = {
         pathRewrite: {
           '^/api': ''
         }
+      },
+      '/cdn': {
+        target: 'http://localhost:8180/',
+        changeOrigin: true,
+        pathRewrite: {
+          '^/cdn': ''
+        }
       }
     },
 

@@ -1,12 +1,11 @@
 <template lang="pug">
 div
-  el-input(type="hidden"
-    v-model="image")
   el-upload.image-uploader(
     action="/cdn/images"
+    :on-success="handleUploadSuccess"
     )
     img.image(v-if="image"
-      :src="image")
+      :src="imageUrl")
     span.el-icon-plus.image-uploader-icon(v-else)
 </template>
 
@@ -42,13 +41,24 @@ const handleInputFor = key => {
 }
 
 const computed = {
-  image: handleInputFor('image')
+  image: handleInputFor('image'),
+  imageUrl () {
+    return `/cdn/images/${this.image}`
+  }
+}
+
+const methods = {
+  handleUploadSuccess (res, file) {
+    const { image } = res
+    this.image = image
+  }
 }
 
 export default {
   name: 'product-form-image',
   props,
-  computed
+  computed,
+  methods
 }
 </script>
 
