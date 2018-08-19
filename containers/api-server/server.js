@@ -5,7 +5,7 @@ const getenv     = require('getenv')
 const logger     = require('koa-logger')
 const bodyparser = require('koa-bodyparser')
 
-const router     = require('./lib/routes/products')
+const router     = require('./lib/routes')
 
 // Settings
 
