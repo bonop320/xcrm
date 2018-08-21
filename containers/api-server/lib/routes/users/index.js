@@ -1,7 +1,5 @@
 const Router = require('koa-router')
 
-const pouchdb = require('../../middlewares/pouchdb')
-
 const create = require('./create')
 const read = require('./read')
 
@@ -17,8 +15,6 @@ const routerFor = name => {
   }
 
   const router = new Router(options)
-
-  router.use(pouchdb({ name }))
 
   return router
 }

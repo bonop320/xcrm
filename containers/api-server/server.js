@@ -5,6 +5,7 @@ const getenv     = require('getenv')
 const logger     = require('koa-logger')
 const bodyparser = require('koa-bodyparser')
 
+const pouchdb    = require('./lib/middlewares/pouchdb')
 const router     = require('./lib/routes')
 
 // Settings
@@ -18,6 +19,7 @@ const app = new Koa()
 app.use(logger())
 app.use(bodyparser())
 
+app.use(pouchdb(['users']))
 app.use(router())
 
 //

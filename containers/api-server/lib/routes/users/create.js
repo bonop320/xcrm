@@ -42,9 +42,13 @@ module.exports = () => {
   return function createUser (ctx) {
     const { db, request } = ctx
 
-    const insert = data =>
-      db.put(data)
-        .then(res => db.get(res.id))
+    const insert = data => {
+      const { users } = db
+
+      return users
+        .put(data)
+        .then(res => users.get(res.id))
+    }
 
     const resolve = res => {
       ctx.body = res

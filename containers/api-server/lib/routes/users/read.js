@@ -7,13 +7,20 @@ const {
 //
 
 module.exports = () => {
-  const safe = dissoc('hash')
+  const ensafe = dissoc('hash')
 
   return function readUser (ctx) {
     const { db, params } = ctx
 
-    const read = x =>
-      db.get(x.id)
+    console.log(db)
+
+    const read = x => {
+      const { users } = db
+
+      return users
+        .get(x.id)
+        .then(ensafe)
+    }
 
     const resolve = res => {
       ctx.body = res
@@ -27,7 +34,6 @@ module.exports = () => {
     return Promise
       .resolve(params)
       .then(read)
-      .then(safe)
       .then(resolve)
       .catch(reject)
   }
