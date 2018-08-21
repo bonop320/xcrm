@@ -13,26 +13,12 @@ const {
 
 //
 
-const SCOPE = 'products'
-
 const FIELDS = [
   '_id',
   'name',
   'price',
   'image'
 ]
-
-//
-
-const routerFor = name => {
-  const options = {
-    prefix: `/${name}`
-  }
-
-  const router = new Router(options)
-
-  return router
-}
 
 // Helpers
 
@@ -147,7 +133,7 @@ function find () {
 }
 
 function install () {
-  const router = routerFor(SCOPE)
+  const router = new Router()
 
   router
     .get('/', find())

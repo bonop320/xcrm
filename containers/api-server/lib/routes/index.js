@@ -6,8 +6,8 @@ const users = require('./users')
 const install = () => {
   const router = new Router()
 
-  router.use(products())
-  router.use(users())
+  router.use('/products', products())
+  router.use('/users', users())
 
   return router.routes()
 }
