@@ -49,33 +49,15 @@ test.serial('read', async t => {
     .then(assertResult)
 })
 
-//
-// test.serial('find', async t => {
-//   const [ body ] = repo
-//
-//   const assertResult = res => {
-//     t.true(Array.isArray(res))
-//   }
-//
-//   await request
-//     .get(`/`)
-//     .then(prop('data'))
-//     .then(assertResult)
-// })
-//
-// test.serial('delete', async t => {
-//   const [ body ] = repo
-//
-//   await request
-//     .delete(`/${body._id}`)
-//     .then(res => {
-//       t.is(res.status, 204)
-//     })
-//
-//   await request
-//     .get(`/${body._id}`)
-//     .then(_ => t.fail('should not exist anymore'))
-//     .catch(res => {
-//       t.is(res.response.status, 404)
-//     })
-// })
+test.serial('find', async t => {
+  const [ body ] = repo
+
+  const assertResult = res => {
+    t.true(Array.isArray(res))
+  }
+
+  await request
+    .get(`/`)
+    .then(prop('data'))
+    .then(assertResult)
+})
