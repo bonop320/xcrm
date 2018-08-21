@@ -11,8 +11,6 @@ const {
   trim
 } = require('ramda')
 
-const pouchdb = require('../middlewares/pouchdb')
-
 //
 
 const SCOPE = 'products'
@@ -32,8 +30,6 @@ const routerFor = name => {
   }
 
   const router = new Router(options)
-
-  router.use(pouchdb({ name }))
 
   return router
 }
@@ -57,18 +53,19 @@ function create () {
   return async ctx => {
     const { request, db } = ctx
 
-    const insert = data =>
-      db.put(data)
+    const insert = data => {
+      const { products } = db
 
-    const recover = res =>
-      db.get(res.id)
+      return products
+        .put(data)
+        .then(res => products.get(res.id))
+    }
 
     ctx.body = await Promise
       .resolve(request.body)
       .then(productFrom)
       .then(stamp)
       .then(insert)
-      .then(recover)
       .then(productFrom)
 
     ctx.status = 200
@@ -79,8 +76,13 @@ function read () {
   return async ctx => {
     const { params, db } = ctx
 
-    const get = id =>
-      db.get(id)
+    const read = id => {
+      const { products } = db
+
+      return products
+        .get(id)
+        .then(productFrom)
+    }
 
     const resolve = data => {
       ctx.status = 200
@@ -94,8 +96,7 @@ function read () {
 
     await Promise
       .resolve(params._id)
-      .then(get)
-      .then(productFrom)
+      .then(read)
       .then(resolve)
       .catch(reject)
   }
@@ -105,16 +106,17 @@ function destroy () {
   return async ctx => {
     const { params, db } = ctx
 
-    const get = id =>
-      db.get(id)
+    const destroy = id => {
+      const { products } = db
 
-    const del = doc =>
-      db.remove(doc)
+      return products
+        .get(id)
+        .then(doc => products.remove(doc))
+    }
 
     await Promise
       .resolve(params._id)
-      .then(get)
-      .then(del)
+      .then(destroy)
 
     ctx.status = 204
   }
@@ -124,9 +126,13 @@ function find () {
   return async ctx => {
     const { request, db } = ctx
 
-    const find = (selector = {}) =>
-      db.find({ selector })
+    const find = (selector = {}) => {
+      const { products } = db
+
+      return products
+        .find({ selector })
         .then(prop('docs'))
+    }
 
     const resolve = data => {
       ctx.status = 200

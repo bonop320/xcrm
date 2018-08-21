@@ -12,6 +12,11 @@ const router     = require('./lib/routes')
 
 const PORT = getenv.int('NODE_PORT', 8080)
 
+const SCOPES = [
+  'users',
+  'products'
+]
+
 //
 
 const app = new Koa()
@@ -19,7 +24,7 @@ const app = new Koa()
 app.use(logger())
 app.use(bodyparser())
 
-app.use(pouchdb(['users']))
+app.use(pouchdb(SCOPES))
 app.use(router())
 
 //
