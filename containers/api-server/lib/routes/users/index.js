@@ -1,19 +1,9 @@
 const Router = require('koa-router')
 
-const { ulid } = require('ulid')
-
-const getenv = require('getenv')
-
-const {
-  compose,
-  evolve,
-  pick,
-  trim
-} = require('ramda')
-
 const pouchdb = require('../../middlewares/pouchdb')
 
-const Model = require('./methods')
+const create = require('./create')
+const read = require('./read')
 
 //
 
@@ -34,26 +24,12 @@ const routerFor = name => {
 }
 
 // Helpers
-
-
-function create () {
-
-  return async ctx => {
-    const { request, db } = ctx
-
-    ctx.body = await Model
-      .create(db, request.body)
-      .then(console.log)
-
-    ctx.status = 201
-  }
-}
-
 function install () {
   const router = routerFor(SCOPE)
 
   router
     .post('/', create())
+    .get('/:id', read())
 
   return router.routes()
 }
