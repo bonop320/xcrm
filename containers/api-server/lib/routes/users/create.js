@@ -6,6 +6,11 @@ const {
   replace
 } = require('ramda')
 
+const {
+  stubObj,
+  stubNull
+} = require('ramda-adjunct')
+
 const md5 = require('md5')
 
 // generic helpers
@@ -28,16 +33,18 @@ const hashOf = compose(md5, prop('password'))
 const nameOf = trimmedProp('name')
 const idOf = compose(String, phoneOf)
 
-//
+// format
+
+const parse = applySpec({
+  _id   : idOf,
+  name  : nameOf,
+  phone : phoneOf,
+  hash  : hashOf,
+  repo  : stubObj,
+  head  : stubNull
+})
 
 module.exports = () => {
-  // format
-  const parse = applySpec({
-    _id   : idOf,
-    name  : nameOf,
-    phone : phoneOf,
-    hash  : hashOf
-  })
 
   return function createUser (ctx) {
     const { db, request } = ctx
@@ -51,6 +58,8 @@ module.exports = () => {
     }
 
     const resolve = res => {
+      console.log(res)
+
       ctx.body = res
       ctx.status = 201
     }

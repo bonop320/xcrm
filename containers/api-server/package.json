@@ -2,7 +2,7 @@
   "name": "@xcrm/api-server",
   "version": "0.0.1",
   "scripts": {
-    "test": "ava -vws",
+    "test": "ava -vs",
     "start": "pm2 start",
     "dev": "nodemon server.js"
   },
@@ -22,6 +22,7 @@
     "pouchdb": "^7.0.0",
     "pouchdb-find": "^7.0.0",
     "ramda": "^0.25.0",
+    "ramda-adjunct": "^2.9.0",
     "ulid": "^2.3.0"
   }
 }

@@ -41,6 +41,7 @@ test.serial('read', async t => {
     t.is(res.name, 'Aram Baykalov')
     t.is(res.phone, 37455364636, 'phone is number')
     t.is(res.hash, void 0, 'strip private data')
+    t.deepEqual(res.repo, {})
   }
 
   await request

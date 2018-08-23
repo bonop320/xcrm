@@ -12,8 +12,6 @@ module.exports = () => {
   return function readUser (ctx) {
     const { db, params } = ctx
 
-    console.log(db)
-
     const read = x => {
       const { users } = db
 
