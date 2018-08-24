@@ -1,3 +1,5 @@
+const composeM = require('koa-compose')
+
 const {
   compose,
   trim,
@@ -44,9 +46,15 @@ const parse = applySpec({
   head  : stubNull
 })
 
-module.exports = () => {
+function acl (ctx, next) {
+  const { user } = ctx.state
 
-  return function createUser (ctx) {
+  if (user._id === 'admin') return next()
+
+  ctx.throw(403)
+}
+
+function createUser (ctx) {
     const { db, request } = ctx
 
     const insert = data => {
@@ -77,4 +85,7 @@ module.exports = () => {
       .then(resolve)
       .catch(reject)
   }
+
+module.exports = () => {
+  return composeM([acl, createUser])
 }

@@ -2,6 +2,8 @@ import test from 'ava'
 
 import Axios from 'axios'
 
+import jwt from 'jsonwebtoken'
+
 import {
   prop
 } from 'ramda'
@@ -11,6 +13,12 @@ const request = Axios.create({
 })
 
 const repo = []
+
+const token = jwt.sign({ _id: 'admin' }, 'changeit')
+
+const headers = {
+  'Authorization': `Bearer ${token}`
+}
 
 test.serial.skip('create', async t => {
   const body = {
@@ -45,7 +53,7 @@ test.serial('read', async t => {
   }
 
   await request
-    .get(`/37455364636`)
+    .get(`/37455364636`, { headers })
     .then(prop('data'))
     .then(assertResult)
 })
@@ -58,7 +66,7 @@ test.serial('find', async t => {
   }
 
   await request
-    .get(`/`)
+    .get(`/`, { headers })
     .then(prop('data'))
     .then(assertResult)
 })
