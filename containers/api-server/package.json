@@ -2,7 +2,7 @@
   "name": "@xcrm/api-server",
   "version": "0.0.1",
   "scripts": {
-    "test": "ava -vws",
+    "test": "ava -vs",
     "start": "pm2 start",
     "dev": "nodemon server.js"
   },
@@ -14,14 +14,18 @@
   },
   "dependencies": {
     "getenv": "^0.7.0",
+    "jsonwebtoken": "^8.3.0",
     "koa": "^2.5.2",
     "koa-bodyparser": "^4.2.1",
+    "koa-compose": "^4.1.0",
+    "koa-jwt": "^3.3.2",
     "koa-logger": "^3.2.0",
     "koa-router": "^7.4.0",
     "md5": "^2.2.1",
     "pouchdb": "^7.0.0",
     "pouchdb-find": "^7.0.0",
     "ramda": "^0.25.0",
+    "ramda-adjunct": "^2.9.0",
     "ulid": "^2.3.0"
   }
 }
