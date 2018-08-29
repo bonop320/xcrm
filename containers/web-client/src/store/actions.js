@@ -1,12 +1,17 @@
-import Axios from 'axios'
+import { tap } from 'ramda'
 
-import { Users } from '@/services'
-
-const request = Axios.create({ baseURL: '/api' })
+import {
+  Users,
+  Tokens
+} from '@/services'
 
 function fetchCurrentUser (ctx) {
+  const setUser = data =>
+    ctx.commit('SET_USER', data)
+
   return Users
     .fetchMe()
+    .then(tap(setUser))
 }
 
 function submitLogin (ctx, creds) {
@@ -16,12 +21,10 @@ function submitLogin (ctx, creds) {
   const fetchUser = _ =>
     ctx.dispatch('fetchCurrentUser')
 
-  return request
-    .post('/tokens', creds)
-    .then(res => res.data)
+  return Tokens
+    .create(creds)
     .then(setToken)
     .then(fetchUser)
-    .catch(console.error)
 }
 
 export {

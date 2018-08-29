@@ -3,7 +3,6 @@ const SET_USER = (state, user) => {
 }
 
 const SET_TOKEN = (state, token) => {
-  console.log(token)
   window.localStorage.setItem('token', token)
 }
 
