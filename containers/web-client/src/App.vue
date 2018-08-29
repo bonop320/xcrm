@@ -1,12 +1,25 @@
 <template lang="pug">
 el-container#app
-  el-main
+  login-view(v-if="noUser")
+  el-main(v-else)
     router-view
 </template>
 
 <script>
+import LoginView from '@/views/login'
+
+const computed = {
+  noUser () {
+    return !this.$store.state.user
+  }
+}
+
 export default {
-  name: 'app'
+  name: 'app',
+  computed,
+  components: {
+    LoginView
+  }
 }
 </script>
 
