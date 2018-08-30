@@ -16,6 +16,11 @@ function fetchCurrentUser (ctx) {
     .then(tap(setUser))
 }
 
+function logoutCurrentUser (ctx) {
+  ctx.commit('DEL_USER')
+  ctx.commit('DEL_TOKEN')
+}
+
 function submitLogin (ctx, creds) {
   const setToken = data =>
     ctx.commit('SET_TOKEN', data.token)
@@ -31,5 +36,6 @@ function submitLogin (ctx, creds) {
 
 export {
   submitLogin,
-  fetchCurrentUser
+  fetchCurrentUser,
+  logoutCurrentUser
 }

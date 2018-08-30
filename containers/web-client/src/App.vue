@@ -1,6 +1,9 @@
 <template lang="pug">
 el-container#app
   el-main(v-if="user")
+    app-header(
+      :user="user"
+      @logout="logoutCurrentUser")
     router-view
   login-view(v-else)
 </template>
@@ -11,11 +14,16 @@ import {
   mapActions
 } from 'vuex'
 
+import AppHeader from '@/components/app-header'
+
 import LoginView from '@/views/login'
 
 const computed = mapState(['token', 'user'])
 
-const methods = mapActions(['fetchCurrentUser'])
+const methods = mapActions([
+  'fetchCurrentUser',
+  'logoutCurrentUser'
+])
 
 function beforeMount () {
   if (this.token) {
@@ -27,6 +35,7 @@ export default {
   name: 'app',
   computed,
   components: {
+    AppHeader,
     LoginView
   },
   methods,
@@ -42,7 +51,6 @@ export default {
   -moz-osx-font-smoothing: grayscale;
   color: #2c3e50;
   max-width: 960px;
-  margin-top: 60px;
   margin-left: auto;
   margin-right: auto;
 }
