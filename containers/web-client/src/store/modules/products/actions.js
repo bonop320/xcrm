@@ -1,45 +1,32 @@
-import Axios from 'axios'
+import { tap } from 'ramda'
 
-const request = Axios.create({
-  baseURL: '/api/products'
-})
+import { Products } from '@/services'
 
 function fetchAll (ctx) {
-  const commit = arr => {
+  const commit = arr =>
     ctx.commit('SET_ALL', arr)
-    return arr
-  }
 
-  return request
-    .get('/')
-    .then(res => res.data)
-    .then(commit)
+  return Products
+    .fetchAll()
+    .then(tap(commit))
 }
 
 function createOne (ctx, body) {
-  const commit = data => {
+  const commit = data =>
     ctx.commit('PUT_ONE', data)
-    return data
-  }
 
-  return request
-    .post('/', body)
-    .then(res => res.data)
-    .then(commit)
+  return Products
+    .createOne(body)
+    .then(tap(commit))
 }
 
 function updateOne (ctx, body) {
-  const commit = data => {
+  const commit = data =>
     ctx.commit('PUT_ONE', data)
-    return data
-  }
 
-  const uri = `/${body._id}`
-
-  return request
-    .put(uri, body)
-    .then(res => res.data)
-    .then(commit)
+  return Products
+    .updateOne(body)
+    .then(tap(commit))
 }
 
 export {
