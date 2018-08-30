@@ -10,7 +10,8 @@ Vue.use(Vuex)
 
 const store = new Vuex.Store({
   state: {
-    user: null
+    status: {},
+    token: window.localStorage.getItem('token')
   },
   actions,
   getters,

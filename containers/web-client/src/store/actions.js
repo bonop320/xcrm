@@ -9,6 +9,8 @@ function fetchCurrentUser (ctx) {
   const setUser = data =>
     ctx.commit('SET_USER', data)
 
+  console.log('xx')
+
   return Users
     .fetchMe()
     .then(tap(setUser))

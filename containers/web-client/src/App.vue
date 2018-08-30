@@ -1,16 +1,25 @@
 <template lang="pug">
 el-container#app
-  login-view(v-if="noUser")
-  el-main(v-else)
+  el-main(v-if="user")
     router-view
+  login-view(v-else)
 </template>
 
 <script>
+import {
+  mapState,
+  mapActions
+} from 'vuex'
+
 import LoginView from '@/views/login'
 
-const computed = {
-  noUser () {
-    return !this.$store.state.user
+const computed = mapState(['token', 'user'])
+
+const methods = mapActions(['fetchCurrentUser'])
+
+function beforeMount () {
+  if (this.token) {
+    this.fetchCurrentUser()
   }
 }
 
@@ -19,7 +28,9 @@ export default {
   computed,
   components: {
     LoginView
-  }
+  },
+  methods,
+  beforeMount
 }
 </script>
 
