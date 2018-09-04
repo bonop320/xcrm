@@ -16,7 +16,7 @@ function acl (ctx, next) {
 
   console.log(user._id, id)
 
-  if (user._id === id || user._id === 'admin')
+  if (user._id === id || user.role === 'admin')
     return next()
 
   ctx.throw(403)

@@ -49,7 +49,7 @@ const parse = applySpec({
 function acl (ctx, next) {
   const { user } = ctx.state
 
-  if (user._id === 'admin') return next()
+  if (user.role === 'admin') return next()
 
   ctx.throw(403)
 }
