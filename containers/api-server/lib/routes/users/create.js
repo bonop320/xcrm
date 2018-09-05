@@ -5,7 +5,8 @@ const {
   trim,
   prop,
   applySpec,
-  replace
+  replace,
+  always
 } = require('ramda')
 
 const {
@@ -40,7 +41,8 @@ const parse = applySpec({
   _id   : idOf,
   name  : nameOf,
   phone : prop('phone'),
-  hash  : hashOf
+  hash  : hashOf,
+  role  : always('agent')
 })
 
 function acl (ctx, next) {
