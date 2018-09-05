@@ -30,20 +30,17 @@ const numberFrom = compose(
 
 // domain helpers
 
-const phoneOf = compose(numberFrom, prop('phone'))
 const hashOf = compose(md5, prop('password'))
 const nameOf = trimmedProp('name')
-const idOf = compose(String, phoneOf)
+const idOf = compose(String, prop('phone'))
 
 // format
 
 const parse = applySpec({
   _id   : idOf,
   name  : nameOf,
-  phone : phoneOf,
-  hash  : hashOf,
-  repo  : stubObj,
-  head  : stubNull
+  phone : prop('phone'),
+  hash  : hashOf
 })
 
 function acl (ctx, next) {

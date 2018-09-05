@@ -1,9 +1,13 @@
 <template lang="pug">
 el-row(:gutter="20")
-  el-col(v-for="user in members"
-    :key="user._id"
-    :span="8")
-      | {{ user.name }}
+  el-table(:data="members")
+    el-table-column(
+      prop="phone"
+      label="Phone")
+
+    el-table-column(
+      prop="name"
+      label="Name")
 </template>
 
 <script>

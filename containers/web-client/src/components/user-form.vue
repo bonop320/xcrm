@@ -9,6 +9,10 @@
           v-if="action === 'create'")
           el-input(type="number"
             v-model.number="form.phone")
+        el-form-item(label="Password"
+          v-if="action === 'create'")
+          el-input(type="password"
+            v-model.number="form.password")
 
     el-form-item
       el-button(@click="submitForm")

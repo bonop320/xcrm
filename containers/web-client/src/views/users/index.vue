@@ -10,7 +10,7 @@ div
   el-dialog(
     v-if="isCreating"
     :visible.sync="isCreating")
-      product-form(
+      user-form(
         action="create"
         @submit="submitCreate")
 
