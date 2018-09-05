@@ -1,7 +1,7 @@
 import { mapGetters } from 'vuex'
 
-import UserList from '@/components/user-list'
-import UserForm from '@/components/user-form'
+import AgentTable from '@/components/agent-table'
+import AgentForm from '@/components/agent-form'
 
 import * as methods from './methods'
 
@@ -10,7 +10,7 @@ const data = () => ({
 })
 
 const computed = mapGetters('users', {
-  'users': 'all'
+  'agents': 'allAgents'
 })
 
 function mounted () {
@@ -18,12 +18,12 @@ function mounted () {
 }
 
 export default {
-  name: 'users-view',
+  name: 'agents-view',
   data,
   computed,
   components: {
-    UserList,
-    UserForm
+    AgentTable,
+    AgentForm
   },
   methods,
   mounted

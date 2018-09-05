@@ -13,8 +13,8 @@ header.clearfix
           router-link(to="/products")
             | Products
         li.nav-item(v-if="isAdmin")
-          router-link(to="/users")
-            | Users
+          router-link(to="/agents")
+            | Agents
 
     el-col.user-info(:span="8")
       el-dropdown(@command="handleCommand")

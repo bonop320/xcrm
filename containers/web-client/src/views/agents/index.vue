@@ -1,7 +1,5 @@
 <template lang="pug">
 div
-  h1 Users
-
   div.control-toolbar.clearfix
     el-button(type="primary"
       @click="showCreateModal")
@@ -10,11 +8,11 @@ div
   el-dialog(
     v-if="isCreating"
     :visible.sync="isCreating")
-      user-form(
+      agent-form(
         action="create"
         @submit="submitCreate")
 
-  user-list(:members="users")
+  agent-table(:members="agents")
 
 </template>
 

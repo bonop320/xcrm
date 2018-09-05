@@ -2,12 +2,16 @@
 el-row(:gutter="20")
   el-table(:data="members")
     el-table-column(
+      prop="name"
+      label="Name")
+
+    el-table-column(
       prop="phone"
       label="Phone")
 
     el-table-column(
-      prop="name"
-      label="Name")
+      prop="role"
+      label="Role")
 </template>
 
 <script>

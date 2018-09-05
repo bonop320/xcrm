@@ -1,7 +1,18 @@
 import {
-  values
+  values,
+  filter,
+  propEq,
+  compose
 } from 'ramda'
 
+const all = values
+
+const allAgents = compose(
+  filter(propEq('role', 'agent')),
+  all
+)
+
 export {
-  values as all
+  all,
+  allAgents
 }

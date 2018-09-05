@@ -2,26 +2,26 @@ import Vue from 'vue'
 import Router from 'vue-router'
 
 import Products from '@/views/products'
-import Users from '@/views/users'
+import Agents from '@/views/agents'
 
 Vue.use(Router)
 
 const routes = [
   {
     path: '/',
-    redirect: { name: 'ViewProducts' }
+    redirect: { name: 'view-products' }
   },
 
   {
     path: '/products',
-    name: 'ViewProducts',
+    name: 'view-products',
     component: Products
   },
 
   {
-    path: '/users',
-    name: 'ViewUsers',
-    component: Users
+    path: '/agents',
+    name: 'view-agents',
+    component: Agents
   }
 ]
 
