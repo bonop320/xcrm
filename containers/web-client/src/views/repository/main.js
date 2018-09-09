@@ -1,7 +1,6 @@
 import { mapGetters } from 'vuex'
 
-import ProductList from '@/components/product-list'
-import ProductForm from '@/components/product-form'
+import ProductTable from '@/components/product-table'
 
 import * as methods from './methods'
 
@@ -9,21 +8,20 @@ const data = () => ({
   isCreating: false
 })
 
-// const computed = mapGetters('repository', {
-//   'products': 'all'
-// })
+const computed = mapGetters('repository', {
+  'products': 'all'
+})
 
 function mounted () {
   this.fetchOne()
 }
 
 export default {
-  name: 'ViewProducts',
+  name: 'view-repo',
   data,
-  // computed,
+  computed,
   components: {
-    ProductList,
-    ProductForm
+    ProductTable
   },
   methods,
   mounted

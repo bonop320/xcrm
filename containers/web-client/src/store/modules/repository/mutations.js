@@ -1,9 +1,12 @@
 import Vue from 'vue'
 
-function SET (state, zip) {
-  console.log(zip)
+function SET_PRODUCTS (state, products) {
+  const setOne = x =>
+    Vue.set(state, x._id, x)
+
+  products.forEach(setOne)
 }
 
 export {
-  SET
+  SET_PRODUCTS
 }

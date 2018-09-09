@@ -6,12 +6,8 @@ el-row(:gutter="20")
       label="Name")
 
     el-table-column(
-      prop="phone"
-      label="Phone")
-
-    el-table-column(
-      prop="role"
-      label="Role")
+      prop="amount"
+      label="Amount")
 </template>
 
 <script>
@@ -20,7 +16,7 @@ const props = {
 }
 
 export default {
-  name: 'agent-table',
+  name: 'product-table',
   props
 }
 </script>

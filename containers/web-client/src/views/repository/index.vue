@@ -14,10 +14,7 @@ div
   <!--       action="create" -->
   <!--       @submit="submitCreate") -->
 
-
-  <!-- product-list( -->
-  <!--   :products="products") -->
-
+  product-table(:members="products")
 </template>
 
 <script src="./main.js"></script>

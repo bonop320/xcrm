@@ -9,8 +9,8 @@ import request from '@/services/request'
 function fetchOne (ctx) {
   const { user } = ctx.rootState
 
-  const commit = body =>
-    ctx.commit('SET', body)
+  const commit = products =>
+    ctx.commit('SET_PRODUCTS', products)
 
   const assocAmounts = products => {
     const setAmounts = xMap => {
@@ -30,14 +30,10 @@ function fetchOne (ctx) {
       .then(setAmounts)
   }
 
-  // return request
-  //   .get(url)
-  //   .then(res => res.data)
   return ctx
     .dispatch('products/fetchAll', void 0, { root: true })
     .then(assocAmounts)
-    .then(console.log)
-    // .then(tap(commit))
+    .then(tap(commit))
 }
 
 export {
