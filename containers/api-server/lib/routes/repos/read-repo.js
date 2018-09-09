@@ -15,13 +15,13 @@ const FIELDS = [
 
 const read = curry(
   async function (db, _id) {
+    await db.putIfNotExists({ _id })
     return db.get(_id)
   }
 )
 
 //
 function main () {
-
   return async ctx => {
     const { db, params } = ctx
 
