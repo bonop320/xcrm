@@ -22,26 +22,25 @@ const rejected = code => {
 }
 
 
-async function incrBy (db, sub, delta, _id) {
-  await db.upsert(_id, doc => {
-    const amount = doc[sub] || 0
-    return assoc(sub, amount + delta, doc)
-  })
+const incrOfBy = curry(
+  async function (db, sub, delta, _id) {
+    await db.upsert(_id, doc => {
+      const amount = doc[sub] || 0
+      return assoc(sub, amount + delta, doc)
+    })
 
-  return db.get(_id)
-}
-
-const incrByCurried = curry(incrBy)
-
+    return db.get(_id)
+  }
+)
 
 async function perform (db, payload) {
   const { source, target } = payload
   const { subject, amount } = payload
 
-  const incr = incrByCurried(db, subject)
+  const incrBy = incrOfBy(db, subject)
 
-  const incrOn = incr(amount)
-  const decrOn = incr(-amount)
+  const insert = incrBy(amount)
+  const remove = incrBy(-amount)
 
   const resolveWithRepos = repos =>
     assoc('repos', repos, payload)
@@ -49,17 +48,17 @@ async function perform (db, payload) {
   switch (payload.action) {
     case 'allocate':
       return Promise
-        .all([ decrOn(source), incrOn(target) ])
+        .all([ remove(source), insert(target) ])
         .then(resolveWithRepos)
 
     case 'insert':
       return Promise
-        .all([ incrOn(target) ])
+        .all([ insert(target) ])
         .then(resolveWithRepos)
 
     case 'remove':
       return Promise
-        .all([ decrOn(source) ])
+        .all([ remove(source) ])
         .then(resolveWithRepos)
   }
 }

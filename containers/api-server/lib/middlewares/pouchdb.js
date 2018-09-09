@@ -1,6 +1,7 @@
 const PouchDB = require('pouchdb')
 
 const findPlugin = require('pouchdb-find')
+const upsertPlugin = require('pouchdb-upsert')
 
 const getenv = require('getenv')
 
@@ -29,6 +30,7 @@ const connectTo = scopes => {
 //
 
 PouchDB.plugin(findPlugin)
+PouchDB.plugin(upsertPlugin)
 
 //
 
