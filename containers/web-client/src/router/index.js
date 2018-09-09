@@ -3,6 +3,7 @@ import Router from 'vue-router'
 
 import Products from '@/views/products'
 import Agents from '@/views/agents'
+import Repository from '@/views/repository'
 
 Vue.use(Router)
 
@@ -22,6 +23,12 @@ const routes = [
     path: '/agents',
     name: 'view-agents',
     component: Agents
+  },
+
+  {
+    path: '/repository',
+    name: 'view-repository',
+    component: Repository
   }
 ]
 
