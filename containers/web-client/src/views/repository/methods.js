@@ -2,14 +2,32 @@ import { mapActions } from 'vuex'
 
 const {
   fetchRepo,
-  fetchTransactions
+  fetchTransactions,
+  createTransaction
 } = mapActions('repository', [
   'fetchRepo',
-  'fetchTransactions'
+  'fetchTransactions',
+  'createTransaction'
 ])
 
-function handleTransaction (tx) {
-  console.log(tx)
+function openTxModalFor (product) {
+  this.txModalVisible = true
+
+  this.activeTxSubject = product._id
+}
+
+function closeTxModal () {
+  this.txModalVisible = false
+
+  this.activeTxSubject = null
+}
+
+function submitTxCreate (body) {
+  this.closeTxModal()
+
+  this
+    .createTransaction(body)
+    .then(console.log)
 }
 
 // function submitCreate (data) {
@@ -30,6 +48,8 @@ function handleTransaction (tx) {
 export {
   fetchRepo,
   fetchTransactions,
-  handleTransaction
-  // submitCreate,
+  submitTxCreate,
+  openTxModalFor,
+  closeTxModal,
+  createTransaction
 }

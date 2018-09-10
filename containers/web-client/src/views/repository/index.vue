@@ -2,6 +2,17 @@
 div
   h1 Repository
 
+  el-dialog(
+    v-if="txModalVisible"
+    :visible.sync="txModalVisible"
+    @closed="closeTxModal")
+
+    product-tx-form(
+      :subject="activeTxSubject"
+      :products="products"
+      :agents="agents"
+      @submit="submitTxCreate")
+
   el-tabs(
     tabPosition="left"
     v-model="activeTab")
@@ -12,7 +23,7 @@ div
 
       product-table(
         :members="products"
-        @transaction="handleTransaction")
+        @action="openTxModalFor")
 
     el-tab-pane(
       label="Transactions"

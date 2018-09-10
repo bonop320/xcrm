@@ -6,16 +6,10 @@ const {
   merge
 } = require('ramda')
 
-const FIELDS = [
-  '_id',
-  'name',
-  'price',
-  'image'
-]
-
 //
 const incrOfBy = curry(
   async function (db, sub, delta, _id) {
+
     await db.upsert(_id, doc => {
       const value = Number(doc[sub]) || 0
       return assoc(sub, value + Number(delta), doc)
@@ -48,15 +42,15 @@ const applyTransaction = curry(
     const resolveWithRepos = repos =>
       assoc('repos', repos, payload)
 
-    switch (payload.type) {
-      case 'allocate':
+    switch (payload.action) {
+      case 'transfer':
         return Promise
           .all([ remove(source), insert(target) ])
           .then(resolveWithRepos)
 
       case 'insert':
         return Promise
-          .all([ insert(target) ])
+          .all([ insert(source) ])
           .then(resolveWithRepos)
 
       case 'remove':
@@ -71,15 +65,14 @@ const applyTransaction = curry(
 function main () {
 
   return async ctx => {
-    const { db, request } = ctx
+    const { db, request, params } = ctx
 
     const res = await Promise
       .resolve(request.body)
+      .then(assoc('source', params._id))
       .then(createTransaction(db.repos_transactions))
       .then(applyTransaction(db.repos))
       .catch(console.error)
-
-    console.log(res)
 
     ctx.body = res
   }

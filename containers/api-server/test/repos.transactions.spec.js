@@ -18,16 +18,16 @@ test.skip('(signature)', async t => {
 test.serial('insert (valid)', async t => {
   const payload = {
     action: 'insert',
-    target: 'a',
+    source: 'a',
     subject: 'x',
     amount: 2
   }
 
   const res = await perform(db, payload)
 
-  const [targetRepo] = res.repos
+  const [sourceRepo] = res.repos
 
-  t.is(targetRepo['x'], 2)
+  t.is(sourceRepo['x'], 2)
 })
 
 test.serial('remove (valid)', async t => {

@@ -50,7 +50,18 @@ function fetchTransactions (ctx) {
     .then(commit)
 }
 
+function createTransaction (ctx, payload) {
+  const { user } = ctx.rootState
+
+  const url = `/repos/${user._id}/transactions`
+
+  return request
+    .post(url, payload)
+    .then(res => res.data)
+}
+
 export {
   fetchRepo,
-  fetchTransactions
+  fetchTransactions,
+  createTransaction
 }
