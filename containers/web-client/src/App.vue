@@ -21,13 +21,13 @@ import LoginView from '@/views/login'
 const computed = mapState(['token', 'user'])
 
 const methods = mapActions([
-  'fetchCurrentUser',
+  'populateInitial',
   'logoutCurrentUser'
 ])
 
 function beforeMount () {
   if (this.token) {
-    this.fetchCurrentUser()
+    this.populateInitial()
   }
 }
 

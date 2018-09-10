@@ -34,8 +34,19 @@ function submitLogin (ctx, creds) {
     .then(fetchUser)
 }
 
+async function populateInitial (ctx) {
+  const user = await ctx.dispatch('fetchCurrentUser')
+
+  if (user.role === 'admin') {
+    await ctx.dispatch('users/fetchAll')
+  }
+
+  await ctx.dispatch('products/fetchAll')
+}
+
 export {
   submitLogin,
   fetchCurrentUser,
-  logoutCurrentUser
+  logoutCurrentUser,
+  populateInitial
 }
