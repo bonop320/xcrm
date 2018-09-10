@@ -14,8 +14,7 @@ const data = () => ({
 
 const computed = {
   ...mapGetters('repository', {
-    'products': 'products',
-    'txs': 'txs'
+    'products': 'products'
   }),
   ...mapGetters('users', {
     'agents': 'allAgents'
@@ -24,6 +23,7 @@ const computed = {
 
 async function mounted () {
   await this.fetchRepo()
+  // await this.fetchAgents()
   await this.fetchTransactions()
 }
 

@@ -1,7 +1,5 @@
 import {
-  tap,
-  map,
-  assoc
+  tap
 } from 'ramda'
 
 import request from '@/services/request'
@@ -9,30 +7,20 @@ import request from '@/services/request'
 function fetchRepo (ctx) {
   const { user } = ctx.rootState
 
-  const commit = products =>
-    ctx.commit('SET_PRODUCTS', products)
+  const commit = agg =>
+    ctx.commit('SET_AGG', agg)
 
-  const assocAmounts = products => {
-    const setAmounts = xMap => {
-      const it = product => {
-        const amount = xMap[product._id] || 0
-        return assoc('amount', amount, product)
-      }
-
-      return map(it, products)
-    }
-
+  const fetchRepo = () => {
     const url = `/repos/${user._id}`
 
     return request
       .get(url)
       .then(res => res.data)
-      .then(setAmounts)
   }
 
   return ctx
     .dispatch('products/fetchAll', void 0, { root: true })
-    .then(assocAmounts)
+    .then(fetchRepo)
     .then(tap(commit))
 }
 
@@ -55,9 +43,19 @@ function createTransaction (ctx, payload) {
 
   const url = `/repos/${user._id}/transactions`
 
+  const commit = res =>
+    ctx.commit('PUT_TRANSACTION', res)
+
+  const applyCommit = res => {
+    const [ repo ] = res.repos
+    ctx.commit('SET_AGG', repo)
+  }
+
   return request
     .post(url, payload)
     .then(res => res.data)
+    .then(tap(commit))
+    .then(tap(applyCommit))
 }
 
 export {

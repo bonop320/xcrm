@@ -1,44 +1,21 @@
 <template lang="pug">
 div
-  h1 Repository
-
   el-dialog(
-    v-if="txModalVisible"
+    v-if="txModalVisible && products"
     :visible.sync="txModalVisible"
     @closed="closeTxModal")
 
     product-tx-form(
+      v-if="products && agents"
       :subject="activeTxSubject"
       :products="products"
       :agents="agents"
       @submit="submitTxCreate")
 
-  el-tabs(
-    tabPosition="left"
-    v-model="activeTab")
-
-    el-tab-pane(
-      label="Products"
-      name="products")
-
-      product-table(
-        :members="products"
-        @action="openTxModalFor")
-
-    el-tab-pane(
-      label="Transactions"
-      name="transactions")
-
-      product-tx-table(:members="txs")
+  product-table(
+    v-if="products"
+    :members="products"
+    @action="openTxModalFor")
 </template>
 
 <script src="./main.js"></script>
-
-<style scoped>
-.control-toolbar {
-  margin: 10px 0 20px;
-  padding: 10px 0;
-  border-bottom: 1px solid #ddd;
-  text-align: right;
-}
-</style>

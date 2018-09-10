@@ -9,7 +9,7 @@
     "js": "node --harmony"
   },
   "events": {
-    "restart": "notify-send -t 2500 \"App restarted due to:\n'$FILENAME'\" -u low"
+    "restart": "notify-send -t 2500 \"App restarted\" \"$FILENAME\" -u low"
   },
   "env": {
     "NODE_ENV": "development",

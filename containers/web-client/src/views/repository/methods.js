@@ -10,6 +10,12 @@ const {
   'createTransaction'
 ])
 
+const {
+  fetchAgents
+} = mapActions('users', [
+  'fetchAgents'
+])
+
 function openTxModalFor (product) {
   this.txModalVisible = true
 
@@ -48,6 +54,7 @@ function submitTxCreate (body) {
 export {
   fetchRepo,
   fetchTransactions,
+  fetchAgents,
   submitTxCreate,
   openTxModalFor,
   closeTxModal,

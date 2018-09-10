@@ -1,32 +1,35 @@
 import {
-  values,
   prop,
   compose,
   map,
-  assoc
+  assoc,
+  groupBy
 } from 'ramda'
 
-const products = compose(values, prop('products'))
+const txsBySubject = state => {
+  return groupBy(prop('subject'), state.txs)
+}
 
-const txs = state => {
-  const { products, transactions } = state
+const products = (state, getters, rootState, rootGetters) => {
+  const { agg } = state
+  const { txsBySubject } = getters
 
-  const of = _id => products[_id]
+  const products = rootGetters['products/all']
 
-  const it = tx => {
-    const product = of(tx.subject)
-
-    return product
-      ? assoc('name', product.name, tx)
-      : tx
+  const tagAmount = product => {
+    const amount = agg[product._id]
+    return assoc('amount', amount, product)
   }
 
-  return transactions
-    ? map(it, transactions)
-    : []
+  const tagTxs = product => {
+    const txs = txsBySubject[product._id] || []
+    return assoc('txs', txs, product)
+  }
+
+  return map(compose(tagTxs, tagAmount), products)
 }
 
 export {
   products,
-  txs
+  txsBySubject
 }

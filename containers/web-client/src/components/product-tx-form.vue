@@ -28,7 +28,7 @@
     el-form-item(label="Agent"
       v-if="form.action === 'transfer'")
 
-      el-select(v-model="form.agent")
+      el-select(v-model="form.target")
         el-option(
           v-for="agent in agents"
           :key="agent._id"
@@ -51,11 +51,11 @@ const props = {
     default: 'insert'
   },
   subject: String,
+  target: String,
   products: {
     type: Array,
     default: stubArray
   },
-  agent: String,
   agents: {
     type: Array,
     default: stubArray
@@ -75,11 +75,11 @@ const methods = {
 }
 
 function mounted () {
-  const { action, subject, agent } = this
+  const { action, subject, target } = this
 
   this.form = {
     subject,
-    agent,
+    target,
     amount: 0,
     action
   }

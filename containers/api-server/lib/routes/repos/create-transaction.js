@@ -1,6 +1,7 @@
 const { ulid } = require('ulid')
 
 const {
+  tap,
   curry,
   assoc,
   merge
@@ -20,8 +21,10 @@ const incrOfBy = curry(
 )
 
 const createTransaction = curry(
-  async function (db, body) {
+  async function (db, payload) {
     const _id = ulid()
+
+    const body = assoc('time', new Date(), payload)
 
     return db
       .upsert(_id, merge(body))
@@ -72,6 +75,7 @@ function main () {
       .then(assoc('source', params._id))
       .then(createTransaction(db.repos_transactions))
       .then(applyTransaction(db.repos))
+      // .then(tap(console.log))
       .catch(console.error)
 
     ctx.body = res

@@ -19,10 +19,16 @@ el-row(:gutter="20")
 
           | Edit {{ scope.$index }}
 
+    el-table-column(type="expand")
+      template(slot-scope="props")
+        product-tx-table(:members="props.row.txs")
+
 </template>
 
 <script>
 import { stubArray } from 'ramda-adjunct'
+
+import ProductTxTable from './product-tx-table'
 
 const props = {
   members: {
@@ -41,7 +47,10 @@ const methods = {
 export default {
   name: 'product-table',
   props,
-  methods
+  methods,
+  components: {
+    ProductTxTable
+  }
 }
 </script>
 

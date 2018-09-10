@@ -5,8 +5,8 @@ import * as mutations from './mutations'
 export default {
   namespaced: true,
   state: {
-    products: {},
-    txs: {}
+    agg: {},
+    txs: []
   },
   getters,
   actions,

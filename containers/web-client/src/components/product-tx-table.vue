@@ -1,6 +1,8 @@
 <template lang="pug">
 el-row(:gutter="20")
   el-table(:data="members")
+    el-table-column(type="index")
+
     el-table-column(
       prop="_id"
       label="Id")
@@ -10,18 +12,44 @@ el-row(:gutter="20")
       label="Amount")
 
     el-table-column(
-      prop="name"
-      label="Product Name")
+      prop="action"
+      label="Action")
+
+    el-table-column(
+      prop="target"
+      label="Target")
+
+    el-table-column(label="Last updated")
+      template(slot-scope="scope")
+        time(:title="lastTimeOfToNow(scope.row)")
+          | {{ lastTimeOf(scope.row) }}
+
 </template>
 
 <script>
+import {
+  format,
+  distanceInWordsToNow
+} from 'date-fns'
+
+const computed = {
+  lastTimeOf () {
+    return tx => format(tx.time, 'MM/DD HH:mm')
+  },
+  lastTimeOfToNow () {
+    return tx => distanceInWordsToNow(tx.time)
+  }
+
+}
+
 const props = {
   members: Array
 }
 
 export default {
   name: 'product-tx-table',
-  props
+  props,
+  computed
 }
 </script>
 
