@@ -2,19 +2,23 @@
 div
   h1 Repository
 
-  <!-- div.control-toolbar.clearfix -->
-  <!--   el-button(type="primary" -->
-  <!--     @click="showCreateModal") -->
-  <!--     | Create -->
+  el-tabs(
+    tabPosition="left"
+    v-model="activeTab")
 
-  <!-- el-dialog( -->
-  <!--   v-if="isCreating" -->
-  <!--   :visible.sync="isCreating") -->
-  <!--     product-form( -->
-  <!--       action="create" -->
-  <!--       @submit="submitCreate") -->
+    el-tab-pane(
+      label="Products"
+      name="products")
 
-  product-table(:members="products")
+      product-table(
+        :members="products"
+        @transaction="handleTransaction")
+
+    el-tab-pane(
+      label="Transactions"
+      name="transactions")
+
+      product-tx-table(:members="txs")
 </template>
 
 <script src="./main.js"></script>

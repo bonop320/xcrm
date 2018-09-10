@@ -6,7 +6,7 @@ import {
 
 import request from '@/services/request'
 
-function fetchOne (ctx) {
+function fetchRepo (ctx) {
   const { user } = ctx.rootState
 
   const commit = products =>
@@ -36,6 +36,21 @@ function fetchOne (ctx) {
     .then(tap(commit))
 }
 
+function fetchTransactions (ctx) {
+  const { user } = ctx.rootState
+
+  const commit = txs =>
+    ctx.commit('SET_TRANSACTIONS', txs)
+
+  const url = `/repos/${user._id}/transactions`
+
+  return request
+    .get(url)
+    .then(res => res.data)
+    .then(commit)
+}
+
 export {
-  fetchOne
+  fetchRepo,
+  fetchTransactions
 }

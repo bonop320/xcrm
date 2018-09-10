@@ -1,19 +1,21 @@
 import { mapGetters } from 'vuex'
 
 import ProductTable from '@/components/product-table'
+import ProductTxTable from '@/components/product-tx-table'
 
 import * as methods from './methods'
 
 const data = () => ({
-  isCreating: false
+  activeTab: 'products'
 })
 
-const computed = mapGetters('repository', {
-  'products': 'all'
-})
+const computed = mapGetters('repository', [
+  'products', 'txs'
+])
 
-function mounted () {
-  this.fetchOne()
+async function mounted () {
+  await this.fetchRepo()
+  await this.fetchTransactions()
 }
 
 export default {
@@ -21,7 +23,8 @@ export default {
   data,
   computed,
   components: {
-    ProductTable
+    ProductTable,
+    ProductTxTable
   },
   methods,
   mounted
