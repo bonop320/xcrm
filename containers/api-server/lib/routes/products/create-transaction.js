@@ -14,16 +14,6 @@ const {
 } = require('ramda')
 
 //
-const incrOfBy = curry(
-  async function (db, sub, delta, _id) {
-    const amountLens = lensPath(['repo', sub])
-
-    await db.upsert(over(amountLens, x => (x || 0) + delta))
-
-    return db.get(_id)
-  }
-)
-
 const createTransaction = curry(
   async function (db, payload) {
     const _id = ulid()
@@ -33,6 +23,20 @@ const createTransaction = curry(
     return db
       .upsert(_id, merge(body))
       .then(res => db.get(res.id))
+  }
+)
+
+const incrOfBy = curry(
+  async function (db, product_id, delta, _id) {
+    const amountLens = lensPath(['repo', product_id])
+
+    await db
+      .upsert(_id, over(amountLens, x => (x || 0) + delta))
+      .catch(console.error)
+
+    await db.get(_id).then(console.log)
+
+    return db.get(_id)
   }
 )
 
@@ -47,29 +51,23 @@ const applyTransaction = curry(
     const insert = incrBy(amount)
     const remove = incrBy(-amount)
 
-    const resolveWithRepos = repos =>
-      assoc('repos', repos, payload)
-
     switch (payload.action) {
       case 'transfer':
         return Promise
           .all([ remove(source), insert(target) ])
-          .then(resolveWithRepos)
 
       case 'insert':
+        console.log('exo')
         return Promise
           .all([ insert(source) ])
-          .then(resolveWithRepos)
 
       case 'remove':
         return Promise
           .all([ remove(source) ])
-          .then(resolveWithRepos)
 
       case 'sell':
         return Promise
           .all([ remove(source) ])
-          .then(resolveWithRepos)
     }
   }
 )
@@ -78,14 +76,15 @@ const applyTransaction = curry(
 function main () {
 
   return async ctx => {
-    const { db, request, params } = ctx
+    const { db, request, params, state } = ctx
 
     const res = await Promise
       .resolve(request.body)
-      .then(assoc('source', params._id))
-      .then(createTransaction(db.repos_transactions))
-      .then(tap(console.log))
+      .then(assoc('subject', params._id))
+      .then(assoc('source', state.user._id))
+      .then(createTransaction(db.products_txs))
       .then(applyTransaction(db.users))
+      .then(tap(console.log))
       .catch(console.error)
 
     ctx.body = res

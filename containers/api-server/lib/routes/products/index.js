@@ -11,82 +11,11 @@ const {
   trim
 } = require('ramda')
 
-//
-
-const FIELDS = [
-  '_id',
-  'name',
-  'price',
-  'image'
-]
-
-// Helpers
-
-const productFrom = compose(
-  evolve({
-    name  : trim,
-    price : Number
-  }),
-  pick(FIELDS)
-)
-
-//
-
-function create () {
-  const stamp = obj =>
-    assoc('_id', ulid(), obj)
-
-  return async ctx => {
-    const { request, db } = ctx
-
-    const insert = data => {
-      const { products } = db
-
-      return products
-        .put(data)
-        .then(res => products.get(res.id))
-    }
-
-    ctx.body = await Promise
-      .resolve(request.body)
-      .then(productFrom)
-      .then(stamp)
-      .then(insert)
-      .then(productFrom)
-
-    ctx.status = 200
-  }
-}
-
-function read () {
-  return async ctx => {
-    const { params, db } = ctx
-
-    const read = id => {
-      const { products } = db
-
-      return products
-        .get(id)
-        .then(productFrom)
-    }
-
-    const resolve = data => {
-      ctx.status = 200
-      ctx.body = data
-    }
-
-    const reject = err => {
-      ctx.status = err.status
-      ctx.body = err
-    }
-
-    await Promise
-      .resolve(params._id)
-      .then(read)
-      .then(resolve)
-      .catch(reject)
-  }
-}
+const createProduct = require('./create-product')
+const readProduct = require('./read-product')
+const findProducts = require('./find-products')
+const createTransaction = require('./create-transaction')
+const findTxs = require('./find-txs')
 
 function destroy () {
   return async ctx => {
@@ -108,40 +37,18 @@ function destroy () {
   }
 }
 
-function find () {
-  return async ctx => {
-    const { request, db } = ctx
-
-    const find = (selector = {}) => {
-      const { products } = db
-
-      return products
-        .find({ selector })
-        .then(prop('docs'))
-    }
-
-    const resolve = data => {
-      ctx.status = 200
-      ctx.body = data
-    }
-
-    await Promise
-      .resolve(request.query)
-      .then(find)
-      .then(resolve)
-  }
-}
-
-function install () {
+function main () {
   const router = new Router()
 
   router
-    .get('/', find())
-    .post('/', create())
-    .get('/:_id', read())
+    .get('/', findProducts())
+    .post('/', createProduct())
+    .get('/:_id', readProduct())
     .delete('/:_id', destroy())
+    .post('/:_id/txs', createTransaction())
+    .get('/:_id/txs', findTxs())
 
   return router.routes()
 }
 
-module.exports = install
+module.exports = main
