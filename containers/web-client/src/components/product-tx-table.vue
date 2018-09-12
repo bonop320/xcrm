@@ -1,28 +1,28 @@
 <template lang="pug">
-el-row(:gutter="20")
-  el-table(:data="members")
-    el-table-column(type="index")
+el-card
+  header(slot="header")
+    | Transactions
 
-    el-table-column(
-      prop="_id"
-      label="Id")
+  el-row(:gutter="20")
+    el-table(:data="members")
+      el-table-column(type="index")
 
-    el-table-column(
-      prop="amount"
-      label="Amount")
+      el-table-column(
+        prop="action"
+        label="Action")
 
-    el-table-column(
-      prop="action"
-      label="Action")
+      el-table-column(
+        prop="target"
+        label="Target")
 
-    el-table-column(
-      prop="target"
-      label="Target")
+      el-table-column(
+        prop="amount"
+        label="Amount")
 
-    el-table-column(label="Last updated")
-      template(slot-scope="scope")
-        time(:title="lastTimeOfToNow(scope.row)")
-          | {{ lastTimeOf(scope.row) }}
+      el-table-column(label="Last updated")
+        template(slot-scope="scope")
+          time(:title="lastTimeOfToNow(scope.row)")
+            | {{ lastTimeOf(scope.row) }}
 
 </template>
 

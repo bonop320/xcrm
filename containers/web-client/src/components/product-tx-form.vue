@@ -1,39 +1,44 @@
 <template lang="pug">
+el-card
+
+  header(slot="header")
+    span Submit Transaction
+
   el-form
-    el-form-item(label="Action")
-      el-select(v-model="form.action")
-        el-option(
-          label="Insert"
-          value="insert")
-        el-option(
-          label="Remove"
-          value="remove")
-        el-option(
-          label="Transfer"
-          value="transfer")
-
-    el-form-item(label="Product")
-
-      el-select(v-model="form.subject")
-        el-option(
-          v-for="subject in products"
-          :key="subject._id"
-          :label="subject.name"
-          :value="subject._id")
 
     el-form-item(label="Amount")
       el-input(type="number"
         v-model.number="form.amount")
 
-    el-form-item(label="Agent"
-      v-if="form.action === 'transfer'")
+    template(v-if="role === 'admin'")
+      el-form-item(label="Action")
+        el-select(v-model="form.action")
+          el-option(
+            label="Insert"
+            value="insert")
+          el-option(
+            label="Remove"
+            value="remove")
+          el-option(
+            label="Transfer"
+            value="transfer")
 
-      el-select(v-model="form.target")
-        el-option(
-          v-for="agent in agents"
-          :key="agent._id"
-          :label="agent.name"
-          :value="agent._id")
+      el-form-item(label="Agent"
+        v-if="form.action === 'transfer'")
+
+        el-select(v-model="form.target")
+          el-option(
+            v-for="agent in agents"
+            :key="agent._id"
+            :label="agent.name"
+            :value="agent._id")
+
+    template(v-else)
+      el-form-item(label="Action")
+        el-select(v-model="form.action")
+          el-option(
+            label="Mark as sold"
+            value="sell")
 
     el-form-item
       el-button(@click="submitForm")
@@ -41,21 +46,21 @@
 </template>
 
 <script>
+
+import {
+  clone
+} from 'ramda'
+
 import {
   stubArray
 } from 'ramda-adjunct'
 
 const props = {
-  action: {
+  role: {
     type: String,
-    default: 'insert'
+    default: 'agent'
   },
-  subject: String,
   target: String,
-  products: {
-    type: Array,
-    default: stubArray
-  },
   agents: {
     type: Array,
     default: stubArray
@@ -70,18 +75,28 @@ const data = () => {
 
 const methods = {
   submitForm () {
-    this.$emit('submit', this.form)
+    const form = clone(this.form)
+
+    if (form.amount > 0) {
+      this.$emit('submit', form)
+    }
+
+    this.form.amount = 0
+    this.form.target = null
   }
 }
 
 function mounted () {
-  const { action, subject, target } = this
+  const { role, target } = this
+
+  const action = role === 'admin'
+    ? 'insert'
+    : 'sell'
 
   this.form = {
-    subject,
     target,
-    amount: 0,
-    action
+    action,
+    amount: 0
   }
 }
 
@@ -93,3 +108,5 @@ export default {
   mounted
 }
 </script>
+
+

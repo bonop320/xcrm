@@ -9,8 +9,6 @@ function fetchCurrentUser (ctx) {
   const setUser = data =>
     ctx.commit('SET_USER', data)
 
-  console.log('xx')
-
   return Users
     .fetchMe()
     .then(tap(setUser))
@@ -42,6 +40,8 @@ async function populateInitial (ctx) {
   }
 
   await ctx.dispatch('products/fetchAll')
+  await ctx.dispatch('repo/fetchRepo')
+  await ctx.dispatch('repo/fetchTxs')
 }
 
 export {

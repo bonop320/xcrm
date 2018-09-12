@@ -60,6 +60,11 @@ const applyTransaction = curry(
         return Promise
           .all([ remove(source) ])
           .then(resolveWithRepos)
+
+      case 'sell':
+        return Promise
+          .all([ remove(source) ])
+          .then(resolveWithRepos)
     }
   }
 )

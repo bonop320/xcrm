@@ -1,11 +1,12 @@
 <template lang="pug">
-el-container#app
-  el-main(v-if="user")
-    app-header(
-      :user="user"
-      @logout="logoutCurrentUser")
-    router-view
-  login-view(v-else)
+div
+  el-container#app(v-if="isReady")
+    el-main(v-if="user")
+      app-header(
+        :user="user"
+        @logout="logoutCurrentUser")
+      router-view
+    login-view(v-else)
 </template>
 
 <script>
@@ -18,6 +19,10 @@ import AppHeader from '@/components/app-header'
 
 import LoginView from '@/views/login'
 
+const data = _ => ({
+  isReady: false
+})
+
 const computed = mapState(['token', 'user'])
 
 const methods = mapActions([
@@ -26,14 +31,21 @@ const methods = mapActions([
 ])
 
 function beforeMount () {
-  if (this.token) {
-    this.populateInitial()
+  const setReady = _ => {
+    this.isReady = true
   }
+
+  if (!this.token) return setReady()
+
+  this
+    .populateInitial()
+    .then(setReady)
 }
 
 export default {
   name: 'app',
   computed,
+  data,
   components: {
     AppHeader,
     LoginView
@@ -58,5 +70,23 @@ export default {
 h1, h2 {
   font-weight: normal;
 }
+
+a {
+  text-decoration: none;
+}
+
+a:hover {
+  text-decoration: underline;
+}
+
+.clearfix:before,
+.clearfix:after {
+  display: table;
+  content: "";
+}
+.clearfix:after {
+  clear: both
+}
+
 
 </style>

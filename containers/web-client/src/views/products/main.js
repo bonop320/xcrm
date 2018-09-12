@@ -9,8 +9,8 @@ const data = () => ({
   isCreating: false
 })
 
-const computed = mapGetters('products', {
-  'products': 'all'
+const computed = mapGetters('repo', {
+  'products': 'products'
 })
 
 function mounted () {

@@ -1,9 +1,9 @@
 import products from './products'
 import users from './users'
-import repository from './repository'
+import repo from './repo'
 
 export default {
   products,
   users,
-  repository
+  repo
 }

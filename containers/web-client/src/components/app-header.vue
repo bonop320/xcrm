@@ -4,14 +4,11 @@ header.clearfix
     el-col(:span="16")
       ul.nav
         li.nav-item
-          router-link(to="/repository")
-            | Repository
+          router-link(to="/products")
+            | Products
         li.nav-item
           router-link(to="/accounting")
             | Accounting
-        li.nav-item
-          router-link(to="/products")
-            | Products
         li.nav-item(v-if="isAdmin")
           router-link(to="/agents")
             | Agents

@@ -24,7 +24,7 @@ function fetchRepo (ctx) {
     .then(tap(commit))
 }
 
-function fetchTransactions (ctx) {
+function fetchTxs (ctx) {
   const { user } = ctx.rootState
 
   const commit = txs =>
@@ -38,7 +38,7 @@ function fetchTransactions (ctx) {
     .then(commit)
 }
 
-function createTransaction (ctx, payload) {
+function createTx (ctx, payload) {
   const { user } = ctx.rootState
 
   const url = `/repos/${user._id}/transactions`
@@ -60,6 +60,6 @@ function createTransaction (ctx, payload) {
 
 export {
   fetchRepo,
-  fetchTransactions,
-  createTransaction
+  fetchTxs,
+  createTx
 }
