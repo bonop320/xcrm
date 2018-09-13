@@ -1,6 +1,7 @@
 import {
   mapGetters,
-  mapState
+  mapState,
+  mapActions
 } from 'vuex'
 
 import {
@@ -12,42 +13,38 @@ import ProductCard from '@/components/product-card'
 import ProductTxTable from '@/components/product-tx-table'
 import ProductTxForm from '@/components/product-tx-form'
 
-import * as methods from './methods'
-
 const props = {
   _id: String
 }
 
-const data = () => ({
-  txModalVisible: false
-})
-
 const computed = {
-  self () {
-    const byId = propEq('_id', this._id)
-    return find(byId, this.products)
-  },
-  txs () {
-    return this.txsBySubject[this._id]
-  },
   imageUrl () {
     const { image = 'none.jpg' } = this.self
     return `/cdn/images/${image}`
   },
   ...mapState(['user']),
-  ...mapGetters('repo', [ 'txsBySubject', 'products' ]),
+  ...mapGetters('products', { 'self': 'active' }),
   ...mapGetters('users', { 'agents': 'allAgents' })
 }
 
+const methods = mapActions('products', [
+  'fetchOne',
+  'createTx'
+])
+
+async function beforeMount () {
+  await this.fetchOne(this._id)
+}
+
 export default {
-  name: 'view-repo',
+  name: 'view-products-one',
   props,
-  data,
   computed,
   components: {
     ProductCard,
     ProductTxTable,
     ProductTxForm
   },
-  methods
+  methods,
+  beforeMount
 }

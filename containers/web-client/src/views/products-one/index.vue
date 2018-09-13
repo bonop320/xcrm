@@ -8,10 +8,10 @@ div(v-if="self")
       product-tx-form.space-top(
         :role="user.role"
         :agents="agents"
-        @submit="submitTx")
+        @submit="createTx")
 
     el-col(:span="16")
-      product-tx-table(:members="txs")
+      product-tx-table(:members="self.txs")
 
 </template>
 
@@ -21,9 +21,4 @@ div(v-if="self")
 .space-top {
   margin-top: 20px;
 }
-
-.image {
-  width: 100%;
-}
-
 </style>

@@ -40,8 +40,6 @@ async function populateInitial (ctx) {
   }
 
   await ctx.dispatch('products/fetchAll')
-  await ctx.dispatch('repo/fetchRepo')
-  await ctx.dispatch('repo/fetchTxs')
 }
 
 export {

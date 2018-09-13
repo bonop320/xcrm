@@ -51,23 +51,23 @@ const applyTransaction = curry(
     const insert = incrBy(amount)
     const remove = incrBy(-amount)
 
+    const ap = ps =>
+      Promise
+        .all(ps)
+        .then(_ => payload)
+
     switch (payload.action) {
       case 'transfer':
-        return Promise
-          .all([ remove(source), insert(target) ])
+        return ap([ remove(source), insert(target) ])
 
       case 'insert':
-        console.log('exo')
-        return Promise
-          .all([ insert(source) ])
+        return ap([ insert(source) ])
 
       case 'remove':
-        return Promise
-          .all([ remove(source) ])
+        return ap([ remove(source) ])
 
       case 'sell':
-        return Promise
-          .all([ remove(source) ])
+        return ap([ remove(source) ])
     }
   }
 )
@@ -84,7 +84,6 @@ function main () {
       .then(assoc('source', state.user._id))
       .then(createTransaction(db.products_txs))
       .then(applyTransaction(db.users))
-      .then(tap(console.log))
       .catch(console.error)
 
     ctx.body = res
