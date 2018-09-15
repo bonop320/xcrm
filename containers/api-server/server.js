@@ -19,6 +19,8 @@ const JWT_SECRET = getenv('JWT_SECRET')
 const SCOPES = [
   'users',
   'products',
+  'txs',
+  'invoices',
   'products_txs'
 ]
 

@@ -4,7 +4,7 @@ const products = require('./products')
 const users = require('./users')
 const me = require('./me')
 const tokens = require('./tokens')
-const repos = require('./repos')
+const txs = require('./txs')
 
 const install = () => {
   const router = new Router()
@@ -13,7 +13,7 @@ const install = () => {
   router.use('/users', users())
   router.use('/tokens', tokens())
   router.use('/me', me())
-  router.use('/repos', repos())
+  router.use('/txs', txs())
 
   return router.routes()
 }
