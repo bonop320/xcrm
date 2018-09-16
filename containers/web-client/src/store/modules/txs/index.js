@@ -6,7 +6,7 @@ const state = {
   raw: []
 }
 
-const products = {
+const store = {
   state,
   getters,
   actions,
@@ -14,4 +14,4 @@ const products = {
   namespaced: true
 }
 
-export default products
+export default store

@@ -1,14 +1,11 @@
 import Vue from 'vue'
 
-function SET_ALL (state, arr) {
-  const setOne = x =>
-    Vue.set(state, x._id, x)
-
-  arr.forEach(setOne)
+function SET_ALL (state, products) {
+  Vue.set(state, 'raw', products)
 }
 
-function PUT_ONE (state, data) {
-  Vue.set(state, data._id, data)
+function PUT_ONE (state, product) {
+  state.raw.push(product)
 }
 
 export {

@@ -20,7 +20,7 @@ const props = {
 }
 
 export default {
-  name: 'user-list',
+  name: 'agent-table',
   props
 }
 </script>

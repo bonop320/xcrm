@@ -18,7 +18,10 @@ const JWT_SECRET = getenv('JWT_SECRET')
 
 const SCOPES = [
   'users',
-  'products'
+  'products',
+  'txs',
+  'invoices',
+  'products_txs'
 ]
 
 //
@@ -28,7 +31,7 @@ const app = new Koa()
 app.use(logger())
 app.use(bodyparser())
 
-app.use(jwt({ secret: JWT_SECRET }).unless({ path: [/^\/(tokens|products)/] }))
+app.use(jwt({ secret: JWT_SECRET }).unless({ path: [/^\/(tokens|repos)/] }))
 
 app.use(pouchdb(SCOPES))
 app.use(router())

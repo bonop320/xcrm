@@ -4,15 +4,11 @@ el-row(:gutter="20")
     :key="product._id"
     :span="8")
 
-    product-list-item(
-      :_id="product._id"
-      :name="product.name"
-      :price="product.price"
-      :image="product.image")
+    product-card(:params="product")
 </template>
 
 <script>
-import ProductListItem from '@/components/product-list-item'
+import ProductCard from '@/components/product-card'
 
 const props = {
   products: Array
@@ -22,7 +18,7 @@ export default {
   name: 'product-list',
   props,
   components: {
-    ProductListItem
+    ProductCard
   }
 }
 </script>

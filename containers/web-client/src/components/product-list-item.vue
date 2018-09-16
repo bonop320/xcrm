@@ -5,23 +5,24 @@ el-card.box-card(:body-style="{ padding: '0px' }")
 
   el-row.card-body
     el-col.card-content(:span="16")
-      h3.name-tag {{ name }}
+      h3.name-tag
+        router-link(
+          :to="{ name: 'view-products-one', params: params }")
+          | {{ params.name }}
+
     el-col.card-control(:span="8")
-      span.price-tag {{ price }}
+      span.price-tag {{ params.price }}
 
 </template>
 
 <script>
 const props = {
-  _id: String,
-  name: String,
-  price: Number,
-  image: String
+  params: Object
 }
 
 const computed = {
   imageUrl () {
-    const { image = 'none.jpg' } = this
+    const { image = 'none.jpg' } = this.params
     return `/cdn/images/${image}`
   }
 }

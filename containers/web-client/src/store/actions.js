@@ -9,8 +9,6 @@ function fetchCurrentUser (ctx) {
   const setUser = data =>
     ctx.commit('SET_USER', data)
 
-  console.log('xx')
-
   return Users
     .fetchMe()
     .then(tap(setUser))
@@ -34,8 +32,20 @@ function submitLogin (ctx, creds) {
     .then(fetchUser)
 }
 
+async function populateInitial (ctx) {
+  const user = await ctx.dispatch('fetchCurrentUser')
+
+  if (user.role === 'admin') {
+    await ctx.dispatch('users/fetchAll')
+  }
+
+  await ctx.dispatch('txs/fetchAll')
+  await ctx.dispatch('products/fetchAll')
+}
+
 export {
   submitLogin,
   fetchCurrentUser,
-  logoutCurrentUser
+  logoutCurrentUser,
+  populateInitial
 }

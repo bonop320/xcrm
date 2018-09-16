@@ -1,6 +1,8 @@
 <template lang="pug">
-div
-  h1 Login
+el-card.center
+
+  header(slot="header")
+    strong Login
 
   el-form(
     :model="form"
@@ -20,3 +22,9 @@ div
 </template>
 
 <script src="./main.js"></script>
+
+<style scoped>
+.center {
+  margin: 60px auto;
+}
+</style>
