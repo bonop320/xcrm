@@ -5,13 +5,13 @@ div(v-if="self")
     el-col(:span="8")
       product-card(:params="self")
 
-      product-tx-form.space-top(
+      tx-form.space-top(
         :role="user.role"
         :agents="agents"
         @submit="createTx")
 
     el-col(:span="16")
-      product-tx-table(:members="self.txs")
+      tx-table(:members="self.txs")
 
 </template>
 

@@ -10,8 +10,8 @@ import {
 } from 'ramda'
 
 import ProductCard from '@/components/product-card'
-import ProductTxTable from '@/components/product-tx-table'
-import ProductTxForm from '@/components/product-tx-form'
+import TxTable from '@/components/tx-table'
+import TxForm from '@/components/tx-form'
 
 import * as computed from './computed'
 import * as methods from './methods'
@@ -30,8 +30,8 @@ export default {
   computed,
   components: {
     ProductCard,
-    ProductTxTable,
-    ProductTxForm
+    TxTable,
+    TxForm
   },
   methods,
   beforeMount
