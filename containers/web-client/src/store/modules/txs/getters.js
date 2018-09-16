@@ -12,6 +12,10 @@ import {
 const bySubject = state =>
   groupBy(prop('subject'), state.raw)
 
+const bySubjectOf = (state, getters) => {
+  return id => prop(id, getters.bySubject)
+}
+
 const amountsBySubject = (state, getters) => {
   const isOutgoing = contained([
     'remove',
@@ -32,6 +36,7 @@ const amountFor = (state, getters) => {
 
 export {
   bySubject,
+  bySubjectOf,
   amountsBySubject,
   amountFor
 }

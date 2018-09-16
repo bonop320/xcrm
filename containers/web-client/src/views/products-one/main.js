@@ -13,24 +13,12 @@ import ProductCard from '@/components/product-card'
 import ProductTxTable from '@/components/product-tx-table'
 import ProductTxForm from '@/components/product-tx-form'
 
+import * as computed from './computed'
+import * as methods from './methods'
+
 const props = {
   _id: String
 }
-
-const computed = {
-  imageUrl () {
-    const { image = 'none.jpg' } = this.self
-    return `/cdn/images/${image}`
-  },
-  ...mapState(['user']),
-  ...mapGetters('products', { 'self': 'active' }),
-  ...mapGetters('users', { 'agents': 'allAgents' })
-}
-
-const methods = mapActions('products', [
-  'fetchOne',
-  'createTx'
-])
 
 async function beforeMount () {
   await this.fetchOne(this._id)

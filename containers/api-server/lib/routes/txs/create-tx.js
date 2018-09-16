@@ -131,8 +131,8 @@ function main () {
     const createInvoice = invoiceBuilder(db)
 
     // extract relevant fields
-    const agent   = state.user._id
-    const patient = request.body.patient
+    const source = state.user._id
+    const target = request.body.target
 
     const body = txFrom(request.body)
 
@@ -140,15 +140,15 @@ function main () {
       case 'transfer':
         const tx = await Promise
           .resolve(body)
-          .then(assoc('target', patient))
-          .then(createTx(agent))
+          .then(assoc('target', target))
+          .then(createTx(source))
 
         await Promise
           .resolve(body)
           .then(assoc('action', 'receive'))
-          .then(assoc('source', agent))
+          .then(assoc('source', source))
           .then(assoc('rel', tx._id))
-          .then(createTx(patient))
+          .then(createTx(target))
           .then(createInvoice)
 
         ctx.body = tx
@@ -156,7 +156,7 @@ function main () {
         break
 
       default:
-        ctx.body = await createTx(agent, body)
+        ctx.body = await createTx(source, body)
 
         break
     }

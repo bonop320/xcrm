@@ -5,11 +5,6 @@ import {
   propEq
 } from 'ramda'
 
-const active = (state, getters, rootState) => {
-  const { _id } = rootState.route.params || {}
-  return find(propEq('_id', _id), getters.complete)
-}
-
 const complete = (state, getters, rootState, rootGetters) => {
   const tagAmount = x => {
     const of = rootGetters['txs/amountFor']
@@ -19,7 +14,11 @@ const complete = (state, getters, rootState, rootGetters) => {
   return map(tagAmount, state.raw)
 }
 
+const byId = (state, getters) => {
+  return _id => find(propEq('_id', _id), getters.complete)
+}
+
 export {
-  active,
-  complete
+  complete,
+  byId
 }
