@@ -20,8 +20,7 @@ const SCOPES = [
   'users',
   'products',
   'txs',
-  'invoices',
-  'products_txs'
+  'invoices'
 ]
 
 //

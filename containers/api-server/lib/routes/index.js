@@ -5,6 +5,7 @@ const users = require('./users')
 const me = require('./me')
 const tokens = require('./tokens')
 const txs = require('./txs')
+const invoices = require('./invoices')
 
 const install = () => {
   const router = new Router()
@@ -14,6 +15,7 @@ const install = () => {
   router.use('/tokens', tokens())
   router.use('/me', me())
   router.use('/txs', txs())
+  router.use('/invoices', invoices())
 
   return router.routes()
 }
