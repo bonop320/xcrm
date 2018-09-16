@@ -1,34 +1,25 @@
 import {
-  compose,
-  assoc,
   map,
-  values,
+  assoc,
   find,
   propEq
 } from 'ramda'
 
 const active = (state, getters, rootState) => {
-  const { _id } = rootState.route.params
-  return find(propEq('_id', _id), getters.all)
+  const { _id } = rootState.route.params || {}
+  return find(propEq('_id', _id), getters.complete)
 }
 
-const all = (state, getters, rootState) => {
-  const { repo } = rootState.user
-
+const complete = (state, getters, rootState, rootGetters) => {
   const tagAmount = x => {
-    const amount = repo[x._id] || 0
-    return assoc('amount', amount, x)
+    const of = rootGetters['txs/amountFor']
+    return assoc('amount', of(x._id), x)
   }
 
-  const parse = compose(
-    map(tagAmount),
-    values
-  )
-
-  return parse(state)
+  return map(tagAmount, state.raw)
 }
 
 export {
   active,
-  all
+  complete
 }

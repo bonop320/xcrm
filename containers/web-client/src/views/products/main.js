@@ -9,8 +9,8 @@ const data = () => ({
   isCreating: false
 })
 
-const computed = mapGetters('repo', {
-  'products': 'products'
+const computed = mapGetters('products', {
+  'products': 'complete'
 })
 
 function mounted () {
@@ -18,7 +18,7 @@ function mounted () {
 }
 
 export default {
-  name: 'ViewProducts',
+  name: 'view-products',
   data,
   computed,
   components: {

@@ -39,6 +39,7 @@ async function populateInitial (ctx) {
     await ctx.dispatch('users/fetchAll')
   }
 
+  await ctx.dispatch('txs/fetchAll')
   await ctx.dispatch('products/fetchAll')
 }
 
