@@ -7,6 +7,7 @@ import ProductsOne from '@/views/products-one'
 import Agents from '@/views/agents'
 
 import Invoices from '@/views/invoices'
+import Payments from '@/views/payments'
 
 Vue.use(Router)
 
@@ -37,6 +38,12 @@ const routes = [
     path: '/invoices',
     name: 'view-invoices',
     component: Invoices
+  },
+
+  {
+    path: '/payments',
+    name: 'view-payments',
+    component: Payments
   }
 ]
 

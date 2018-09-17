@@ -9,6 +9,9 @@ header.clearfix
         li.nav-item
           router-link(to="/invoices")
             | Invoices
+        li.nav-item
+          router-link(to="/payments")
+            | Payments
         li.nav-item(v-if="isAdmin")
           router-link(to="/agents")
             | Agents
