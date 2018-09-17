@@ -8,6 +8,8 @@ el-table(
   el-table-column(
     prop="book"
     label="Book")
+    template(slot-scope="scope")
+      span {{ scope.row.agent.name }}
 
   el-table-column(label="Product")
     template(slot-scope="scope")
