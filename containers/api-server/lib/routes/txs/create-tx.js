@@ -23,8 +23,17 @@ const tagTime = x =>
   assoc('time', new Date(), x)
 
 const txFrom = compose(
-  evolve({ amount: Number }),
-  pick([ 'subject', 'amount', 'action' ])
+  evolve({
+    amount: Number,
+    price: Number
+  }),
+  pick([
+    'subject',
+    'amount',
+    'price',
+    'action',
+    'target'
+  ])
 )
 
 /**
@@ -50,15 +59,13 @@ const txFrom = compose(
 
 const txBuilder = curry(
   async function (db, book, body) {
-    const { txs } = db
-
     const tagBook = assoc('book', book)
 
     const put = body =>
-      txs.put(body)
+      db.put(body)
 
     const get = res =>
-      txs.get(res.id)
+      db.get(res.id)
 
     return Promise
       .resolve(body)
@@ -82,40 +89,28 @@ const txBuilder = curry(
 
 const invoiceBuilder = curry(
   async function (db, tx) {
-    const { products, invoices } = db
-
     const parse = compose(
       tagId,
       tagTime,
+      assoc('total', tx.amount * tx.price),
       assoc('tx', tx._id),
       pick([
         'subject',
         'amount',
+        'price',
         'source',
         'book'
       ])
     )
 
-    const convertAmount = tx => {
-      const update = doc => {
-        const amount = doc.price * tx.amount
-        return assoc('amount', amount, tx)
-      }
-
-      return products
-        .get(tx.subject)
-        .then(update)
-    }
-
     const put = body =>
-      invoices.put(body)
+      db.put(body)
 
     const get = res =>
-      invoices.get(res.id)
+      db.get(res.id)
 
     return Promise
       .resolve(tx)
-      .then(convertAmount)
       .then(parse)
       .then(put)
       .then(get)
@@ -127,8 +122,8 @@ function main () {
   return async (ctx, next) => {
     const { db, request, params, state } = ctx
 
-    const createTx = txBuilder(db)
-    const createInvoice = invoiceBuilder(db)
+    const createTx = txBuilder(db.txs)
+    const createInvoice = invoiceBuilder(db.invoices)
 
     // extract relevant fields
     const source = state.user._id
@@ -140,7 +135,6 @@ function main () {
       case 'transfer':
         const tx = await Promise
           .resolve(body)
-          .then(assoc('target', target))
           .then(createTx(source))
 
         await Promise

@@ -6,7 +6,8 @@ import {
 
 import {
   find,
-  propEq
+  propEq,
+  always
 } from 'ramda'
 
 import ProductCard from '@/components/product-card'
@@ -20,19 +21,24 @@ const props = {
   _id: String
 }
 
-async function beforeMount () {
-  await this.fetchOne(this._id)
-}
+const data = always({
+  displayTxDialog: false
+})
+
+// async function beforeMount () {
+//   await this.fetchOne(this._id)
+// }
 
 export default {
   name: 'view-products-one',
   props,
   computed,
+  data,
   components: {
     ProductCard,
     TxTable,
     TxForm
   },
   methods,
-  beforeMount
+  // beforeMount
 }

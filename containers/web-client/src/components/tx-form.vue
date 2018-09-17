@@ -1,48 +1,56 @@
 <template lang="pug">
-el-card
+el-form(
+  label-position="right"
+  label-width="80px")
 
-  header(slot="header")
-    span Submit Transaction
+  el-row(:gutter="20")
 
-  el-form
+    el-col(:span="12")
+      el-form-item(label="Amount")
+        el-input(type="number"
+          v-model.number="form.amount")
 
-    el-form-item(label="Amount")
-      el-input(type="number"
-        v-model.number="form.amount")
+    el-col(:span="12")
+      el-form-item(label="Price")
+        el-input(type="number"
+          v-model.number="form.price")
 
+  el-row(:gutter="20")
     template(v-if="role === 'admin'")
-      el-form-item(label="Action")
-        el-select(v-model="form.action")
-          el-option(
-            label="Insert"
-            value="insert")
-          el-option(
-            label="Remove"
-            value="remove")
-          el-option(
-            label="Transfer"
-            value="transfer")
+      el-col(:span="12")
+        el-form-item(label="Action")
+          el-select(v-model="form.action")
+            el-option(
+              label="Insert"
+              value="insert")
+            el-option(
+              label="Remove"
+              value="remove")
+            el-option(
+              label="Transfer"
+              value="transfer")
+      el-col(:span="12")
+        el-form-item(label="Agent"
+          v-if="form.action === 'transfer'")
 
-      el-form-item(label="Agent"
-        v-if="form.action === 'transfer'")
-
-        el-select(v-model="form.target")
-          el-option(
-            v-for="agent in agents"
-            :key="agent._id"
-            :label="agent.name"
-            :value="agent._id")
+          el-select(v-model="form.target")
+            el-option(
+              v-for="agent in agents"
+              :key="agent._id"
+              :label="agent.name"
+              :value="agent._id")
 
     template(v-else)
-      el-form-item(label="Action")
-        el-select(v-model="form.action")
-          el-option(
-            label="Mark as sold"
-            value="sell")
+      el-col(:span="12")
+        el-form-item(label="Action")
+          el-select(v-model="form.action")
+            el-option(
+              label="Sell"
+              value="sell")
 
-    el-form-item
-      el-button(@click="submitForm")
-        | Submit
+  el-form-item
+    el-button(@click="submitForm")
+      | Submit
 </template>
 
 <script>
@@ -52,6 +60,7 @@ import {
 } from 'ramda'
 
 import {
+  stubObj,
   stubArray
 } from 'ramda-adjunct'
 
@@ -61,6 +70,10 @@ const props = {
     default: 'agent'
   },
   target: String,
+  product: {
+    type: Object,
+    default: stubObj
+  },
   agents: {
     type: Array,
     default: stubArray
@@ -87,7 +100,7 @@ const methods = {
 }
 
 function mounted () {
-  const { role, target } = this
+  const { role, target, product } = this
 
   const action = role === 'admin'
     ? 'insert'
@@ -96,15 +109,21 @@ function mounted () {
   this.form = {
     target,
     action,
-    amount: 0
+    amount: 0,
+    price: product.price,
+    subject: product._id
   }
 }
 
 export default {
-  name: 'product-tx-form',
+  name: 'tx-form',
   props,
   data,
   methods,
   mounted
 }
 </script>
+
+<style>
+
+</style>

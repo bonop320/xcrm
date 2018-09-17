@@ -1,42 +1,38 @@
 <template lang="pug">
-el-card
-  header(slot="header")
-    | Transactions
+el-table(
+  :data="members"
+  :default-sort="defaultSort"
+  :show-summary="true"
+  :summary-method="getSummary"
+  )
 
-  el-row(:gutter="20")
-    el-table(
-      :data="members"
-      :default-sort = "defaultSort"
-      :show-summary="true"
-      :summary-method="getSummary"
-      )
-      el-table-column(type="index")
+  el-table-column(type="index")
 
-      el-table-column(
-        prop="action"
-        label="Action"
-        :filters="optionsFor('action')"
-        :filter-method="filterHandler")
+  el-table-column(
+    prop="action"
+    label="Action"
+    :filters="optionsFor('action')"
+    :filter-method="filterHandler")
 
-      el-table-column(
-        prop="target"
-        label="Target"
-        :filters="optionsFor('target')"
-        :filter-method="filterHandler")
+  el-table-column(
+    prop="target"
+    label="Target"
+    :filters="optionsFor('target')"
+    :filter-method="filterHandler")
 
-      el-table-column(
-        prop="amount"
-        label="Amount"
-        align="right")
+  el-table-column(
+    prop="amount"
+    label="Amount"
+    align="right")
 
-      el-table-column(
-        prop="time"
-        label="Date"
-        :sortable="true"
-        align="right")
-        template(slot-scope="scope")
-          time(:title="lastTimeOfToNow(scope.row)")
-            | {{ lastTimeOf(scope.row) }}
+  el-table-column(
+    prop="time"
+    label="Date"
+    :sortable="true"
+    align="right")
+    template(slot-scope="scope")
+      time(:title="lastTimeOfToNow(scope.row)")
+        | {{ lastTimeOf(scope.row) }}
 </template>
 
 <script>
@@ -52,7 +48,8 @@ import {
 
 import {
   contained,
-  compact
+  compact,
+  stubArray
 } from 'ramda-adjunct'
 
 import {
@@ -63,7 +60,10 @@ import {
 //
 
 const props = {
-  members: Array
+  members: {
+    type: Array,
+    default: stubArray
+  }
 }
 
 const data = always({

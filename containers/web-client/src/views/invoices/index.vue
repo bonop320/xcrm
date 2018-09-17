@@ -1,5 +1,8 @@
 <template lang="pug">
-div
+el-card
+  header(slot="header")
+    | Invoices
+
   invoice-table(:members="invoices")
 </template>
 
