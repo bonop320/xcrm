@@ -11,8 +11,8 @@ const {
 
 const FIELDS = [
   '_id',
-  'subject',
-  'amount',
+  'book',
+  'total',
   'note',
   'image'
 ]
@@ -32,17 +32,19 @@ const createIn = collection => data => {
   return Promise
     .resolve(data)
     .then(assoc('_id', ulid()))
+    .then(assoc('time', new Date()))
     .then(data => collection.put(data))
     .then(res => collection.get(res.id))
 }
 
 function main () {
   return async ctx => {
-    const { request, db } = ctx
+    const { request, db, state } = ctx
 
     ctx.body = await Promise
       .resolve(request.body)
       .then(paymentFrom)
+      .then(assoc('book', state.user._id))
       .then(createIn(db.payments))
 
     ctx.status = 200

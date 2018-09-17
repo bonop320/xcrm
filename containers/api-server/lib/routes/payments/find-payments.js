@@ -1,6 +1,6 @@
 const { keys } = require('ramda')
 
-const filterForUser = collection => user => {
+const filterForUser = user => {
   return user.role === 'admin'
     ? {}
     : { book: user._id }
@@ -23,7 +23,7 @@ function main () {
 
     await Promise
       .resolve(state.user)
-      .then(filterForUser(db.users))
+      .then(filterForUser)
       .then(findIn(db.payments))
       .then(resolve)
   }
