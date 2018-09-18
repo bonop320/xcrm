@@ -1,31 +1,29 @@
-import { assoc } from 'ramda'
+import { mapGetters } from 'vuex'
 
-import { mapState, mapGetters } from 'vuex'
-
-const { user } = mapState(['user'])
-
-const { agents } = mapGetters('users', {
-  'agents': 'allAgents'
+const getters = mapGetters({
+  find: 'products/byId',
+  agentOptions: 'users/allAgents',
+  txsBy: 'txs/by',
+  amountBy: 'txs/totalAmountBy'
 })
 
 function self () {
-  const { _id } = this
-  const { getters } = this.$store
-
-  const byId = getters['products/byId']
-  const txsBySubject = getters['txs/bySubjectOf']
-
-  return assoc('txs', txsBySubject(_id), byId(_id))
+  return this.find(this._id)
 }
 
-function imageUrl () {
-  const { image = 'none.jpg' } = this.self
-  return `/cdn/images/${image}`
+function amount () {
+  const subject = this._id
+  return this.amountBy({ subject })
 }
 
-export {
-  user,
-  agents,
+function txs () {
+  const subject = this._id
+  return this.txsBy({ subject })
+}
+
+export default {
+  ...getters,
   self,
-  imageUrl
+  txs,
+  amount
 }

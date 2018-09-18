@@ -6,6 +6,9 @@ import ProductsOne from '@/views/products-one'
 
 import Agents from '@/views/agents'
 
+import Invoices from '@/views/invoices'
+import Payments from '@/views/payments'
+
 Vue.use(Router)
 
 const routes = [
@@ -29,13 +32,19 @@ const routes = [
     path: '/agents',
     name: 'view-agents',
     component: Agents
-  }
+  },
 
-  // {
-  //   path: '/repository',
-  //   name: 'view-repository',
-  //   component: Repository
-  // }
+  {
+    path: '/invoices',
+    name: 'view-invoices',
+    component: Invoices
+  },
+
+  {
+    path: '/payments',
+    name: 'view-payments',
+    component: Payments
+  }
 ]
 
 export default new Router({

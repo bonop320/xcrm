@@ -4,18 +4,30 @@ div
     el-button(
       type="primary"
       size="small"
-      @click="showCreateModal")
+      @click="openModal = 'create'")
       | Create
 
   el-dialog(
-    v-if="isCreating"
-    :visible.sync="isCreating")
+    title="Create product"
+    v-if="openModal === 'create'"
+    @close="openModal = null"
+    width="600px"
+    :visible="true")
 
-    product-form(
-      action="create"
+    product-manage-form(
       @submit="submitCreate")
 
-  product-list(:products="products")
+  el-row(:gutter="20")
+    el-col(v-for="member in members"
+      :key="member._id"
+      :span="8")
+
+      product-card(
+        :_id="member._id"
+        :name="member.name"
+        :price="member.price"
+        :image="member.image"
+        :amount="totalAmountOf(member._id)")
 
 </template>
 

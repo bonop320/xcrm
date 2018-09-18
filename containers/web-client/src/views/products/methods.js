@@ -1,22 +1,18 @@
 import { mapActions } from 'vuex'
 
-const { fetchAll, createOne } = mapActions('products', [
-  'fetchAll',
-  'createOne'
-])
-
-function showCreateModal () {
-  this.isCreating = true
-}
+const actions = mapActions({
+  fetchAll: 'products/fetchAll',
+  createOne: 'products/createOne'
+})
 
 function submitCreate (data) {
   const onSuccess = data => {
-    this.isCreating = false
-
     this.$message({
       message: `Product ${data.name} created`,
       type: 'success'
     })
+
+    this.openModal = null
   }
 
   this
@@ -24,9 +20,7 @@ function submitCreate (data) {
     .then(onSuccess)
 }
 
-export {
-  showCreateModal,
+export default {
   submitCreate,
-  fetchAll,
-  createOne
+  ...actions
 }

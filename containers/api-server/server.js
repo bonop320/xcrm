@@ -21,7 +21,7 @@ const SCOPES = [
   'products',
   'txs',
   'invoices',
-  'products_txs'
+  'payments'
 ]
 
 //

@@ -1,24 +1,12 @@
 import {
-  map,
-  assoc,
   find,
-  propEq
+  whereEq
 } from 'ramda'
 
-const complete = (state, getters, rootState, rootGetters) => {
-  const tagAmount = x => {
-    const of = rootGetters['txs/amountFor']
-    return assoc('amount', of(x._id), x)
-  }
-
-  return map(tagAmount, state.raw)
-}
-
 const byId = (state, getters) => {
-  return _id => find(propEq('_id', _id), getters.complete)
+  return _id => find(whereEq({ _id }), state.raw)
 }
 
 export {
-  complete,
   byId
 }

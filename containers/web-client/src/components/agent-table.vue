@@ -10,8 +10,9 @@ el-row(:gutter="20")
       label="Phone")
 
     el-table-column(
-      prop="role"
-      label="Role")
+      align="right"
+      prop="totalPayable"
+      label="Total Receivable")
 </template>
 
 <script>

@@ -1,24 +1,32 @@
-import { assoc } from 'ramda'
-
 import { mapActions } from 'vuex'
 
-const { fetchOne } = mapActions('products', [
-  'fetchOne'
-])
+const actions = mapActions({
+  fetchSelf: 'products/fetchOne',
+  createTx: 'txs/createOne'
+})
 
-function createTx (body) {
-  const tagSubject = assoc('subject', this._id)
-
+function submitTx (body) {
   const create = body =>
-    this.$store.dispatch('txs/createOne', body)
+    this.createTx(body)
+
+  const done = res => {
+    const { amount, action } = res
+
+    this.$notify({
+      title: 'Transactions',
+      message: `${amount} items ${action}ed`
+    })
+
+    this.openModal = null
+  }
 
   return Promise
     .resolve(body)
-    .then(tagSubject)
     .then(create)
+    .then(done)
 }
 
-export {
-  createTx,
-  fetchOne
+export default {
+  submitTx,
+  ...actions
 }
