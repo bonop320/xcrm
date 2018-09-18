@@ -1,29 +1,39 @@
 <template lang="pug">
-  el-form
-    el-row
-      el-col(:span="8")
-        el-upload.image-uploader(
-          action="/cdn/images"
-          :show-file-list="false"
-          :on-success="handleUploadSuccess")
+  el-form(
+    ref="form"
+    :model="form"
+    label-position="left"
+    label-width="80px")
 
-          img.image(v-if="form.image" :src="imageUrl")
+    el-row(:gutter="20")
 
-          span.el-icon-plus.image-uploader-icon(v-else)
-
-      el-col(:span="16")
+      el-col(:span="14")
         el-form-item(label="Name")
           el-input(type="text"
             v-model="form.name")
+
         el-form-item(label="Price")
           el-input(type="number"
             v-model.number="form.price")
 
         el-form-item
+          el-upload(
+            action="/cdn/images"
+            :show-file-list="false"
+            :on-success="handleUploadSuccess")
+
+            el-button Upload image
+
+      el-col.preview-image(:span="10")
+        img.image(:src="imageUrl")
+
+      el-col(:span="24")
+        el-form-item
           el-button(
             type="primary"
             @click="emitSubmit")
             | Submit
+
 </template>
 
 <script>
@@ -53,8 +63,8 @@ const data = always({
 
 const computed = {
   imageUrl () {
-    const { image } = this.form
-    if (image) return `/cdn/images/${image}`
+    const { image = 'none.jpg' } = this.form
+    return `/cdn/images/${image}`
   }
 }
 
@@ -87,27 +97,8 @@ export default {
 </script>
 
 <style>
-  .image-uploader .el-upload {
-    border: 1px solid #ddd;
-    border-radius: 1px;
-    cursor: pointer;
-    position: relative;
-    overflow: hidden;
-  }
-
-  .image-uploader .image {
-    width: 180px;
-    height: 180px;
+  .preview-image .image {
+    width: 100%;
     display: block;
   }
-
-  .image-uploader-icon {
-    font-size: 28px;
-    color: #8c939d;
-    width: 180px;
-    height: 180px;
-    line-height: 180px;
-    text-align: center;
-  }
-
 </style>

@@ -1,16 +1,13 @@
-import { mapGetters } from 'vuex'
+import { always } from 'ramda'
 
 import ProductList from '@/components/product-list'
-import ProductForm from '@/components/product-form'
+import ProductManageForm from '@/components/product-manage-form'
 
-import * as methods from './methods'
+import methods from './methods'
+import computed from './computed'
 
-const data = () => ({
-  isCreating: false
-})
-
-const computed = mapGetters('products', {
-  'products': 'complete'
+const data = always({
+  openModal: null
 })
 
 function mounted () {
@@ -23,7 +20,7 @@ export default {
   computed,
   components: {
     ProductList,
-    ProductForm
+    ProductManageForm
   },
   methods,
   mounted

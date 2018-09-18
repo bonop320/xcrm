@@ -4,18 +4,20 @@ div
     el-button(
       type="primary"
       size="small"
-      @click="showCreateModal")
+      @click="openModal = 'create'")
       | Create
 
   el-dialog(
-    v-if="isCreating"
-    :visible.sync="isCreating")
+    title="Create product"
+    v-if="openModal === 'create'"
+    @close="openModal = null"
+    width="600px"
+    :visible="true")
 
-    product-form(
-      action="create"
+    product-manage-form(
       @submit="submitCreate")
 
-  product-list(:products="products")
+  product-list(:products="members")
 
 </template>
 

@@ -2,10 +2,12 @@
 div
   el-upload.image-uploader(
     action="/cdn/images"
-    :on-success="handleUploadSuccess"
-    )
+    :show-file-list="false"
+    :on-success="handleUploadSuccess")
+
     img.image(v-if="value"
       :src="imageUrl")
+
     span.el-icon-plus.image-uploader-icon(v-else)
 </template>
 
@@ -36,28 +38,27 @@ export default {
 }
 </script>
 
-<style scoped>
-  .el-upload {
-    border: 1px dashed #d9d9d9;
-    border-radius: 6px;
+<style>
+  .image-uploader .el-upload {
+    border: 1px solid #ddd;
+    border-radius: 1px;
     cursor: pointer;
     position: relative;
     overflow: hidden;
   }
-  .image-uploader .el-upload:hover {
-    border-color: #409EFF;
-  }
+
   .image-uploader-icon {
     font-size: 28px;
     color: #8c939d;
-    width: 200px;
-    height: 200px;
-    line-height: 200px;
+    width: 180px;
+    height: 180px;
+    line-height: 180px;
     text-align: center;
   }
+
   .image {
-    width: 200px;
-    height: 200px;
+    width: 180px;
+    height: 180px;
     display: block;
   }
 </style>
