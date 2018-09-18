@@ -1,6 +1,6 @@
 import { always } from 'ramda'
 
-import ProductList from '@/components/product-list'
+import ProductCard from '@/components/product-card'
 import ProductManageForm from '@/components/product-manage-form'
 
 import methods from './methods'
@@ -19,7 +19,7 @@ export default {
   data,
   computed,
   components: {
-    ProductList,
+    ProductCard,
     ProductManageForm
   },
   methods,

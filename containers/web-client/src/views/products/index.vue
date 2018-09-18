@@ -17,7 +17,12 @@ div
     product-manage-form(
       @submit="submitCreate")
 
-  product-list(:products="members")
+  el-row(:gutter="20")
+    el-col(v-for="member in members"
+      :key="member._id"
+      :span="8")
+
+      product-card(:params="member")
 
 </template>
 
