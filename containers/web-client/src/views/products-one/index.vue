@@ -2,7 +2,12 @@
 div(v-if="self")
   el-row(:gutter="20")
     el-col(:span="8")
-      product-card(:params="self")
+      product-card(
+        :_id="_id"
+        :name="self.name"
+        :price="self.price"
+        :image="self.image"
+        :amount="amount")
 
     el-col(:span="16")
       el-dialog(

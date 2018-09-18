@@ -5,30 +5,46 @@ el-card(:body-style="{ padding: '0px' }")
 
   header(slot="header")
     router-link(
-      :to="{ name: 'view-products-one', params: params }")
-      | {{ params.name }}
+      :to="`/products/${_id}`")
+      | {{ name }}
 
   el-row.card-body
     el-col(:span="12")
       dl
         dt Price
-        dd {{ params.price }}
+        dd {{ price }}
 
     el-col(:span="12")
       dl.align-right
         dt Amount
-        dd {{ params.amount }}
+        dd {{ amount }}
 
 </template>
 
 <script>
 const props = {
-  params: Object
+  _id: {
+    type: String
+  },
+  amount: {
+    type: Number,
+    default: 0
+  },
+  name: {
+    type: String
+  },
+  price: {
+    type: Number
+  },
+  image: {
+    type: String,
+    default: 'none.jpg'
+  }
 }
 
 const computed = {
   imageUrl () {
-    const { image = 'none.jpg' } = this.params
+    const { image } = this
     return `/cdn/images/${image}`
   }
 }

@@ -1,25 +1,29 @@
 import { mapGetters } from 'vuex'
 
 const getters = mapGetters({
-  agentOptions: 'users/allAgents'
+  find: 'products/byId',
+  agentOptions: 'users/allAgents',
+  txsBy: 'txs/by',
+  amountBy: 'txs/totalAmountBy'
 })
 
 function self () {
-  const { getters } = this.$store
+  return this.find(this._id)
+}
 
-  const byId = getters['products/byId']
-  return byId(this._id)
+function amount () {
+  const subject = this._id
+  return this.amountBy({ subject })
 }
 
 function txs () {
-  const { getters } = this.$store
-
-  const txsBy = getters['txs/bySubjectOf']
-  return txsBy(this._id)
+  const subject = this._id
+  return this.txsBy({ subject })
 }
 
 export default {
+  ...getters,
   self,
   txs,
-  ...getters
+  amount
 }

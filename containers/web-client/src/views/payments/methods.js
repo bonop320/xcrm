@@ -1,6 +1,6 @@
-import { assoc } from 'ramda'
+// import { assoc } from 'ramda'
 
-import { mapActions } from 'vuex'
+// import { mapActions } from 'vuex'
 
 function openPaymentDialog () {
   this.displayPaymentDialog = true

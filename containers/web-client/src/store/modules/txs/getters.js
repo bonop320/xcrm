@@ -1,4 +1,7 @@
 import {
+  compose,
+  filter,
+  whereEq,
   groupBy,
   prop,
   map,
@@ -8,6 +11,30 @@ import {
 import {
   contained
 } from 'ramda-adjunct'
+
+const by = state => {
+  return query => filter(whereEq(query), state.raw)
+}
+
+const totalAmountBy = (state, getters) => {
+  const isOutgoing = contained([
+    'remove',
+    'transfer'
+  ])
+
+  const sum = (acc, { action, amount }) => {
+    const delta = isOutgoing(action)
+      ? -amount
+      : amount
+
+    return acc + delta
+  }
+
+  return compose(
+    reduce(sum, 0),
+    getters.by
+  )
+}
 
 const bySubject = state =>
   groupBy(prop('subject'), state.raw)
@@ -35,6 +62,8 @@ const amountFor = (state, getters) => {
 }
 
 export {
+  by,
+  totalAmountBy,
   bySubject,
   bySubjectOf,
   amountsBySubject,

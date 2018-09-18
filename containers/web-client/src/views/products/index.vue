@@ -22,7 +22,12 @@ div
       :key="member._id"
       :span="8")
 
-      product-card(:params="member")
+      product-card(
+        :_id="member._id"
+        :name="member.name"
+        :price="member.price"
+        :image="member.image"
+        :amount="totalAmountOf(member._id)")
 
 </template>
 

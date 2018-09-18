@@ -1,14 +1,23 @@
-import { mapGetters } from 'vuex'
+import {
+  mapState,
+  mapGetters
+} from 'vuex'
 
-const getters = mapGetters({
-  products: 'products/complete'
+const state = mapState('products', {
+  members: 'raw'
 })
 
-function members () {
-  return this.products
+const getters = mapGetters({
+  totalAmountBy: 'txs/totalAmountBy'
+})
+
+function totalAmountOf () {
+  return subject =>
+    this.totalAmountBy({ subject })
 }
 
 export default {
+  ...state,
   ...getters,
-  members
+  totalAmountOf
 }
