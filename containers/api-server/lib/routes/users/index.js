@@ -1,17 +1,17 @@
 const Router = require('koa-router')
 
-const create = require('./create')
-const read = require('./read')
-const find = require('./find')
+const createUser = require('./create')
+const readUser = require('./read')
+const findUsers = require('./find')
 
 // Helpers
 function install () {
   const router = new Router()
 
   router
-    .post('/', create())
-    .get('/', find())
-    .get('/:id', read())
+    .post('/', createUser())
+    .get('/', findUsers())
+    .get('/:_id', readUser())
 
   return router.routes()
 }

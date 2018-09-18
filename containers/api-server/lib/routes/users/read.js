@@ -1,37 +1,20 @@
 const composeM = require('koa-compose')
 
-const {
-  dissoc
-} = require('ramda')
-
-// helpers
-
-const ensafe = dissoc('hash')
-
-//
+const { getIn } = require('./helpers')
 
 function acl (ctx, next) {
   const { user } = ctx.state
-  const { id } = ctx.params
+  const { _id } = ctx.params
 
-  console.log(user._id, id)
+  if (user._id !== _id && user.role !== 'admin') {
+    ctx.throw(403)
+  }
 
-  if (user._id === id || user.role === 'admin')
-    return next()
-
-  ctx.throw(403)
+  return next()
 }
 
 function readUser (ctx) {
   const { db, params } = ctx
-
-  const read = x => {
-    const { users } = db
-
-    return users
-      .get(x.id)
-      .then(ensafe)
-  }
 
   const resolve = res => {
     ctx.body = res
@@ -44,11 +27,11 @@ function readUser (ctx) {
 
   return Promise
     .resolve(params)
-    .then(read)
+    .then(getIn(db.users))
     .then(resolve)
     .catch(reject)
 }
 
-module.exports = () => {
-  return composeM([acl, readUser])
-}
+module.exports = () =>
+  composeM([acl, readUser])
+

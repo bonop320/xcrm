@@ -1,21 +1,16 @@
 const composeM = require('koa-compose')
 
-const {
-  map,
-  dissoc
-} = require('ramda')
-
-const ensafeAll = map(dissoc('hash'))
+const { findIn } = require('./helpers')
 
 function acl (ctx, next) {
   const { user } = ctx.state
 
-  if (user.role === 'admin') return next()
+  if (user.role !== 'admin') ctx.throw(403)
 
-  ctx.throw(403)
+  return next()
 }
 
-function findUsers (ctx) {
+function findUsers (ctx, next) {
   const { db, request } = ctx
 
   const resolve = res => {
@@ -23,21 +18,11 @@ function findUsers (ctx) {
     ctx.status = 200
   }
 
-  const find = selector => {
-    const { users } = db
-
-    return users
-      .find({ selector })
-      .then(res => res.docs)
-      .then(ensafeAll)
-  }
-
   return Promise
     .resolve(request.query)
-    .then(find)
+    .then(findIn(db.users))
     .then(resolve)
 }
 
-module.exports = () => {
-  return composeM([acl, findUsers])
-}
+module.exports = () =>
+  composeM([acl, findUsers])
