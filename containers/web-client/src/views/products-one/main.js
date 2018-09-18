@@ -1,28 +1,15 @@
-import {
-  mapGetters,
-  mapState,
-  mapActions
-} from 'vuex'
+import { always } from 'ramda'
 
-import {
-  find,
-  propEq,
-  always
-} from 'ramda'
-
-import ProductCard from '@/components/product-card'
-import TxTable from '@/components/tx-table'
-import TxForm from '@/components/tx-form'
-
-import * as computed from './computed'
-import * as methods from './methods'
+import components from './components'
+import computed from './computed'
+import methods from './methods'
 
 const props = {
   _id: String
 }
 
 const data = always({
-  displayTxDialog: false
+  openModal: null
 })
 
 // async function beforeMount () {
@@ -34,11 +21,7 @@ export default {
   props,
   computed,
   data,
-  components: {
-    ProductCard,
-    TxTable,
-    TxForm
-  },
+  components,
   methods,
   // beforeMount
 }

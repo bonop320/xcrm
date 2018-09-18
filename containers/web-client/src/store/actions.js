@@ -17,19 +17,21 @@ function fetchCurrentUser (ctx) {
 function logoutCurrentUser (ctx) {
   ctx.commit('DEL_USER')
   ctx.commit('DEL_TOKEN')
+
+  window.location.reload(true)
 }
 
 function submitLogin (ctx, creds) {
   const setToken = data =>
     ctx.commit('SET_TOKEN', data.token)
 
-  const fetchUser = _ =>
-    ctx.dispatch('fetchCurrentUser')
+  const done = _ =>
+    window.location.reload(true)
 
   return Tokens
     .create(creds)
     .then(setToken)
-    .then(fetchUser)
+    .then(done)
 }
 
 async function populateInitial (ctx) {

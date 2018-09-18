@@ -6,48 +6,46 @@ div(v-if="self")
 
     el-col(:span="16")
       el-dialog(
-        width="500px"
-        :visible.sync="displayTxDialog")
+        v-if="openModal === 'account'"
+        title="Update quantity"
+        width="320px"
+        @close="openModal = null"
+        :visible="true")
 
-        tx-form.space-top(
-          :role="user.role"
-          :product="self"
+        product-account-form(
+          :subject="_id"
+          :amount="1"
+          :price="self.price"
+          @submit="submitTx")
+
+      el-dialog(
+        v-if="openModal === 'allocate'"
+        title="Transfer to agent"
+        width="320px"
+        @close="openModal = null"
+        :visible="true")
+
+        product-allocate-form(
+          :subject="_id"
+          :amount="1"
+          :price="self.price"
           :agents="agents"
-          @submit="createTx")
+          @submit="submitTx"
+          @reset="isOpenAllocateModal = false")
 
       el-card
-        header.clearfix(slot="header")
-          el-button.float-right(
+        header(slot="header")
+          el-button(
             size="small"
-            @click="openTxDialog")
-            | Create a transaction
+            @click="openModal = 'account'")
+            | Update quantity
 
-        tx-table(:members="self.txs")
+          el-button(
+            size="small"
+            @click="openModal = 'allocate'")
+            | Transfer
 
+        tx-table(:members="txs")
 </template>
 
 <script src="./main.js"></script>
-
-<style scoped>
-.space-top {
-  margin-top: 20px;
-}
-
-.float-left {
-  float: left;
-}
-
-.float-right {
-  float: right;
-}
-
-.clearfix:before,
-.clearfix:after {
-  display: table;
-  content: "";
-}
-.clearfix:after {
-  clear: both
-}
-
-</style>
