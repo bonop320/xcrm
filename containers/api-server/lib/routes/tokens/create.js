@@ -47,6 +47,8 @@ module.exports = () => {
   return function createUser (ctx) {
     const { db, request } = ctx
 
+    console.log(request.body)
+
     const readUser = creds => {
       const { users } = db
 

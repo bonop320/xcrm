@@ -7,10 +7,12 @@ div
 
   el-dialog(
     v-if="isCreating"
+    width="400px"
     :visible.sync="isCreating")
-      agent-form(
-        action="create"
-        @submit="submitCreate")
+
+    agent-form(
+      action="create"
+      @submit="submitCreate")
 
   agent-table(:members="agents")
 
