@@ -17,10 +17,10 @@ el-form(
 
     el-select(v-model="form.target")
       el-option(
-        v-for="agent in agents"
-        :key="agent._id"
-        :label="agent.name"
-        :value="agent._id")
+        v-for="option in agentOptions"
+        :key="option._id"
+        :label="option.name"
+        :value="option._id")
 
   el-form-item
     el-button(
@@ -69,7 +69,7 @@ const props = {
   target: {
     type: String
   },
-  agents: {
+  agentOptions: {
     type: Array,
     default: stubArray
   }

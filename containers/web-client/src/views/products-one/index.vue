@@ -34,7 +34,7 @@ div(v-if="self")
           :subject="_id"
           :amount="1"
           :price="self.price"
-          :agents="agents"
+          :agentOptions="agentOptions"
           @submit="submitTx"
           @reset="isOpenAllocateModal = false")
 
