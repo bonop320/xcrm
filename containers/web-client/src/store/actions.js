@@ -2,7 +2,7 @@ import {
   tap
 } from 'ramda'
 
-import request from '@/services/request'
+import request from './request'
 
 function logoutCurrentUser (store) {
   store.commit('DEL_USER')
@@ -32,10 +32,6 @@ async function populateInitial (store) {
   }
 
   await store.dispatch('fetchProducts')
-
-  await store.dispatch('txs/fetchAll')
-  await store.dispatch('invoices/fetchAll')
-  await store.dispatch('payments/fetchAll')
 }
 
 function fetchAgents (store, query = {}) {
