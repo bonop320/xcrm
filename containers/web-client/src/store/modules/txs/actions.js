@@ -1,14 +1,17 @@
-import { tap } from 'ramda'
+import {
+  tap
+} from 'ramda'
 
-import request from '@/services/request'
+import {
+  putIn,
+  findIn
+} from '@/store/db'
 
 function fetchAll (ctx) {
   const commit = arr =>
     ctx.commit('SET_ALL', arr)
 
-  return request
-    .get('/txs')
-    .then(res => res.data)
+  return findIn('txs', {})
     .then(tap(commit))
 }
 
@@ -16,9 +19,7 @@ function createOne (ctx, body) {
   const commit = data =>
     ctx.commit('PUT_ONE', data)
 
-  return request
-    .post('/txs', body)
-    .then(res => res.data)
+  return putIn('txs', body)
     .then(tap(commit))
 }
 
