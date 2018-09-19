@@ -2,7 +2,7 @@ import { mapGetters } from 'vuex'
 
 import InvoiceTable from '@/components/invoice-table'
 
-import * as methods from './methods'
+import methods from './methods'
 
 const computed = mapGetters('invoices', {
   'invoices': 'complete'
