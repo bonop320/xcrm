@@ -1,12 +1,4 @@
-const { curry } = require('ramda')
-
-const removeFrom = curry(
-  async function (db, id) {
-    return db
-      .get(id)
-      .then(doc => db.remove(doc))
-  }
-)
+const { removeIn } = require('./helpers')
 
 function main () {
   return async ctx => {

@@ -1,24 +1,8 @@
-const { keys } = require('ramda')
-
-const filterForUser = collection => user => {
-  if (user.role === 'admin') return {}
-
-  return collection
-    .get(user._id)
-    .then(res => res.repo || {})
-    .then(keys)
-    .then($in => ({ _id: { $in }}))
-}
-
-const findIn = collection => selector => {
-  return collection
-    .find({ selector })
-    .then(res => res.docs)
-}
+const { findIn } = require('./helpers')
 
 function main () {
   return async ctx => {
-    const { db, state } = ctx
+    const { db, query } = ctx
 
     const resolve = data => {
       ctx.status = 200
@@ -26,8 +10,7 @@ function main () {
     }
 
     await Promise
-      .resolve(state.user)
-      .then(filterForUser(db.users))
+      .resolve(query)
       .then(findIn(db.products))
       .then(resolve)
   }
