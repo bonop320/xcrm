@@ -1,7 +1,19 @@
+const getenv = require('getenv')
+
 const PouchDB = require('pouchdb')
 
-const upsert = require('pouchdb-upsert')
+const upsertPlugin = require('pouchdb-upsert')
+const findPlugin = require('pouchdb-find')
 
-PouchDB.plugin(upsert)
+PouchDB
+  .plugin(upsertPlugin)
+  .plugin(findPlugin)
 
-module.exports = PouchDB
+const POUCHDB_URL = getenv('COUCHDB_URL', 'http://localhost:5984')
+
+function main (name) {
+  const url = `${POUCHDB_URL}/${name}`
+  return new PouchDB(url)
+}
+
+module.exports = main

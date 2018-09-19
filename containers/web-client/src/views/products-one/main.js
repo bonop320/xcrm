@@ -12,9 +12,9 @@ const data = always({
   openModal: null
 })
 
-// async function beforeMount () {
-//   await this.fetchOne(this._id)
-// }
+async function beforeMount () {
+  await this.fetchById(this._id)
+}
 
 export default {
   name: 'view-products-one',
@@ -23,5 +23,5 @@ export default {
   data,
   components,
   methods,
-  // beforeMount
+  beforeMount
 }

@@ -1,8 +1,8 @@
 import { mapActions } from 'vuex'
 
 const actions = mapActions({
-  fetchAll: 'products/fetchAll',
-  createOne: 'products/createOne'
+  fetchAll: 'fetchProducts',
+  createOne: 'createProduct'
 })
 
 function submitCreate (data) {
@@ -21,6 +21,6 @@ function submitCreate (data) {
 }
 
 export default {
-  submitCreate,
-  ...actions
+  ...actions,
+  submitCreate
 }

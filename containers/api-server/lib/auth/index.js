@@ -4,13 +4,20 @@ const Router = require('koa-router')
 
 const composeM = require('koa-compose')
 
-const couchdb = require('./koa-couchdb')
-
 const verifyToken = require('./verify-token')
 const createToken = require('./create-token')
 const createUser = require('./create-user')
 const readUser = require('./read-user')
 const findUsers = require('./find-users')
+
+const PouchDB = require('../pouchdb')
+
+const assocM = (key, value) => {
+  return (ctx, next) => {
+    ctx[key] = value
+    return next()
+  }
+}
 
 // Settings
 
@@ -19,16 +26,13 @@ const JWT_OPTIONS = getenv.multi({
   cookie: ['JWT_COOKIE', 'token']
 })
 
-const COUCHDB_OPTIONS = getenv.multi({
-  host: ['COUCHDB_URL', 'http://localhost:5984']
-})
-
 // Helpers
 function main () {
   const router = new Router()
+  const db = new PouchDB('users')
 
   router
-    .use(couchdb(COUCHDB_OPTIONS))
+    .use(assocM('db', db))
 
   router
     .post('/tokens', createToken(JWT_OPTIONS))
