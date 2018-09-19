@@ -1,8 +1,14 @@
-import { mapGetters } from 'vuex'
+import {
+  mapState,
+  mapGetters
+} from 'vuex'
+
+const state = mapState({
+  agentOptions: 'agents'
+})
 
 const getters = mapGetters({
   find: 'products/byId',
-  agentOptions: 'users/allAgents',
   txsBy: 'txs/by',
   amountBy: 'txs/totalAmountBy'
 })
@@ -22,6 +28,7 @@ function txs () {
 }
 
 export default {
+  ...state,
   ...getters,
   self,
   txs,
