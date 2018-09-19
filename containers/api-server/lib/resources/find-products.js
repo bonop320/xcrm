@@ -11,7 +11,7 @@ function main () {
 
     await Promise
       .resolve(query)
-      .then(findIn(db.products))
+      .then(findIn(db))
       .then(resolve)
   }
 }

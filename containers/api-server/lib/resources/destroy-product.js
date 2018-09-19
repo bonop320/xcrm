@@ -5,8 +5,8 @@ function main () {
     const { params, db } = ctx
 
     await Promise
-      .resolve(params._id)
-      .then(removeFrom(db.products))
+      .resolve(params)
+      .then(removeFrom(db))
 
     ctx.status = 204
   }

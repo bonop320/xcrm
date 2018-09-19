@@ -6,6 +6,7 @@ const logger     = require('koa-logger')
 const bodyparser = require('koa-bodyparser')
 
 const auth       = require('./lib/auth')
+const resources  = require('./lib/resources')
 
 const pouchdb    = require('./lib/middlewares/pouchdb')
 const router     = require('./lib/routes')
@@ -30,6 +31,7 @@ app.use(logger())
 app.use(bodyparser())
 
 app.use(auth())
+app.use(resources())
 
 app.use(pouchdb(SCOPES))
 app.use(router())

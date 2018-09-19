@@ -8,10 +8,7 @@ function main () {
 
     ctx.body = await Promise
       .resolve(request.body)
-      .then(createIn(db.products))
-      .then(console.log)
-
-    ctx.status = 200
+      .then(createIn(db))
   }
 }
 

@@ -1,12 +1,4 @@
-const readFrom = collection => params => {
-  const extractId = x =>
-    x._id || x.id || x
-
-  return Promise
-    .resolve(params)
-    .then(extractId)
-    .then(_id => collection.get(_id))
-}
+const { readIn } = require('./helpers')
 
 function main () {
   return async ctx => {
@@ -24,7 +16,7 @@ function main () {
 
     await Promise
       .resolve(params)
-      .then(readFrom(db.products))
+      .then(readIn(db))
       .then(resolve)
       .catch(reject)
   }
