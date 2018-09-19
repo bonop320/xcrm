@@ -31,7 +31,7 @@ async function populateInitial (ctx) {
     await ctx.dispatch('fetchAgents')
   }
 
-  await ctx.dispatch('products/fetchAll')
+  await ctx.dispatch('fetchProducts')
 
   await ctx.dispatch('txs/fetchAll')
   await ctx.dispatch('invoices/fetchAll')

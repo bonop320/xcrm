@@ -1,7 +1,7 @@
 import { mapActions } from 'vuex'
 
 const actions = mapActions({
-  fetchSelf: 'products/fetchOne',
+  fetchById: 'fetchProductById',
   createTx: 'txs/createOne'
 })
 
@@ -27,6 +27,6 @@ function submitTx (body) {
 }
 
 export default {
-  submitTx,
-  ...actions
+  ...actions,
+  submitTx
 }

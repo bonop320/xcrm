@@ -3,8 +3,8 @@ import {
   mapGetters
 } from 'vuex'
 
-const state = mapState('products', {
-  members: 'raw'
+const state = mapState({
+  members: 'products'
 })
 
 const getters = mapGetters({

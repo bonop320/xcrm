@@ -8,13 +8,13 @@ const state = mapState({
 })
 
 const getters = mapGetters({
-  find: 'products/byId',
+  byId: 'productById',
   txsBy: 'txs/by',
   amountBy: 'txs/totalAmountBy'
 })
 
 function self () {
-  return this.find(this._id)
+  return this.byId(this._id)
 }
 
 function amount () {

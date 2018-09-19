@@ -10,7 +10,7 @@ const agentById = (state) => {
 }
 
 const productById = (state) => {
-  return _id => find(propEq('_id', _id), state.product)
+  return _id => find(propEq('_id', _id), state.products)
 }
 
 export {
