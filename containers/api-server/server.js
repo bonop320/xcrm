@@ -5,7 +5,7 @@ const Koa        = require('koa')
 const logger     = require('koa-logger')
 const bodyparser = require('koa-bodyparser')
 
-const jwt        = require('koa-jwt')
+const auth       = require('./lib/auth')
 
 const pouchdb    = require('./lib/middlewares/pouchdb')
 const router     = require('./lib/routes')
@@ -13,8 +13,6 @@ const router     = require('./lib/routes')
 // Settings
 
 const PORT = getenv.int('NODE_PORT', 8080)
-
-const JWT_SECRET = getenv('JWT_SECRET')
 
 const SCOPES = [
   'users',
@@ -31,7 +29,7 @@ const app = new Koa()
 app.use(logger())
 app.use(bodyparser())
 
-app.use(jwt({ secret: JWT_SECRET }).unless({ path: [/^\/(tokens|repos)/] }))
+app.use(auth())
 
 app.use(pouchdb(SCOPES))
 app.use(router())

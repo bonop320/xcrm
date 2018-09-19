@@ -1,6 +1,10 @@
 const composeM = require('koa-compose')
 
-const { getIn } = require('./helpers')
+const {
+  resolveTo,
+  rejectTo,
+  readIn
+} = require('./helpers')
 
 function acl (ctx, next) {
   const { user } = ctx.state
@@ -16,20 +20,9 @@ function acl (ctx, next) {
 function readUser (ctx) {
   const { db, params } = ctx
 
-  const resolve = res => {
-    ctx.body = res
-    ctx.status = 200
-  }
-
-  const reject = err => {
-    ctx.throw(err.status)
-  }
-
-  return Promise
-    .resolve(params)
-    .then(getIn(db.users))
-    .then(resolve)
-    .catch(reject)
+  return readIn(db, params)
+    .then(resolveTo(ctx))
+    .catch(rejectTo(ctx))
 }
 
 module.exports = () =>

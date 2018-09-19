@@ -20,8 +20,7 @@ const RELEVANT_FIELDS = ['_id', 'role']
 
 // generic helpers
 
-const numberFrom = compose(
-  Number,
+const digitsFrom = compose(
   replace(/[^\d]/g, ''),
   String
 )
@@ -31,15 +30,15 @@ const sign = x =>
 
 // domain helpers
 
-const phoneOf = compose(numberFrom, prop('phone'))
+const phoneOf = compose(digitsFrom, prop('phone'))
 const hashOf = compose(md5, prop('password'))
 const idOf = compose(String, phoneOf)
 
 // format
 
-const parse = applySpec({
-  _id   : idOf,
-  hash  : hashOf
+const parse = evolve({
+  _id      : trim,
+  password : md5
 })
 
 module.exports = () => {

@@ -1,6 +1,10 @@
 const composeM = require('koa-compose')
 
-const { createIn } = require('./helpers')
+const {
+  resolveTo,
+  rejectTo,
+  createIn
+} = require('./helpers')
 
 // middleware functions
 
@@ -17,24 +21,11 @@ function acl (ctx, next) {
 function createUser (ctx, next) {
     const { db, request } = ctx
 
-    const resolve = res => {
-      ctx.body = res
-      ctx.status = 201
-    }
-
-    const reject = err => {
-      console.error(err)
-
-      ctx.throw(err.status)
-
-      return next()
-    }
-
     return Promise
       .resolve(request.body)
-      .then(createIn(db.users))
-      .then(resolve)
-      .catch(reject)
+      .then(createIn(db))
+      .then(resolveTo(ctx))
+      .catch(rejectTo(ctx))
   }
 
 module.exports = () =>
