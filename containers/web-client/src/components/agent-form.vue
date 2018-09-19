@@ -5,16 +5,21 @@
     label-position="left"
     label-width="80px")
 
-    el-form-item(label="Phone"
-      v-if="action === 'create'")
-      el-input(type="number"
-        v-model.number="form.phone")
+    el-form-item(label="User ID")
+      el-input(
+        type="text"
+        v-model="form._id")
+
+    el-form-item(label="Phone")
+      el-input(
+        type="text"
+        v-model="form.phone")
 
     el-form-item(label="Name")
       el-input(type="text"
         v-model="form.name")
-    el-form-item(label="Password"
-      v-if="action === 'create'")
+
+    el-form-item(label="Password")
       el-input(type="password"
         v-model.number="form.password")
 
@@ -24,26 +29,11 @@
 </template>
 
 <script>
-import { clone } from 'ramda'
+import { always } from 'ramda'
 
-import { stubObj } from 'ramda-adjunct'
-
-const props = {
-  action: {
-    type: String,
-    default: 'create'
-  },
-  model: {
-    type: Object,
-    default: stubObj
-  }
-}
-
-const data = () => {
-  return {
-    form: {}
-  }
-}
+const data = always({
+  form: {}
+})
 
 const methods = {
   submitForm () {
@@ -52,16 +42,9 @@ const methods = {
   }
 }
 
-function mounted () {
-  const { model } = this
-  this.form = clone(model)
-}
-
 export default {
   name: 'user-form',
-  props,
   data,
-  methods,
-  mounted
+  methods
 }
 </script>

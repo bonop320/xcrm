@@ -1,12 +1,7 @@
-import { mapGetters } from 'vuex'
-
 import InvoiceTable from '@/components/invoice-table'
 
-import * as methods from './methods'
-
-const computed = mapGetters('invoices', {
-  'invoices': 'complete'
-})
+import methods from './methods'
+import computed from './computed'
 
 export default {
   name: 'invoices-view',

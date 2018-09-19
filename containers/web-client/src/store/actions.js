@@ -1,18 +1,8 @@
-import { tap } from 'ramda'
-
 import {
-  Users,
-  Tokens
-} from '@/services'
+  tap
+} from 'ramda'
 
-function fetchCurrentUser (ctx) {
-  const setUser = data =>
-    ctx.commit('SET_USER', data)
-
-  return Users
-    .fetchMe()
-    .then(tap(setUser))
-}
+import request from '@/services/request'
 
 function logoutCurrentUser (ctx) {
   ctx.commit('DEL_USER')
@@ -28,28 +18,98 @@ function submitLogin (ctx, creds) {
   const done = _ =>
     window.location.reload(true)
 
-  return Tokens
-    .create(creds)
+  return request
+    .post('/tokens', creds)
     .then(setToken)
     .then(done)
 }
 
 async function populateInitial (ctx) {
-  const user = await ctx.dispatch('fetchCurrentUser')
+  const { user } = ctx.state
 
   if (user.role === 'admin') {
-    await ctx.dispatch('users/fetchAll')
+    await ctx.dispatch('fetchAgents')
   }
 
-  await ctx.dispatch('txs/fetchAll')
   await ctx.dispatch('products/fetchAll')
+
+  await ctx.dispatch('txs/fetchAll')
   await ctx.dispatch('invoices/fetchAll')
   await ctx.dispatch('payments/fetchAll')
 }
 
+function fetchAgents (ctx, query = {}) {
+  const commit = arr =>
+    ctx.commit('SET_AGENTS', arr)
+
+  return request
+    .get('/users')
+    .then(res => res.data)
+    .then(tap(commit))
+}
+
+function fetchAgentById (ctx, product) {
+  const _id = product._id || product
+
+  const commit = arr =>
+    ctx.commit('PUT_AGENT', arr)
+
+  return request
+    .get(`/users/${_id}`)
+    .then(res => res.data)
+    .then(tap(commit))
+}
+
+function createAgent (ctx, body) {
+  const commit = data =>
+    ctx.commit('PUT_AGENT', data)
+
+  return request
+    .post('/users', body)
+    .then(res => res.data)
+    .then(tap(commit))
+}
+
+function fetchProducts (ctx, query = {}) {
+  const commit = arr =>
+    ctx.commit('SET_PRODUCTS', arr)
+
+  return request
+    .get('/products')
+    .then(res => res.data)
+    .then(tap(commit))
+}
+
+function fetchProductById (ctx, product) {
+  const _id = product._id || product
+
+  const commit = arr =>
+    ctx.commit('PUT_PRODUCT', arr)
+
+  return request
+    .get(`/products/${_id}`)
+    .then(res => res.data)
+    .then(tap(commit))
+}
+
+function createProduct (ctx, body) {
+  const commit = data =>
+    ctx.commit('PUT_PRODUCT', data)
+
+  return request
+    .post('/products', body)
+    .then(res => res.data)
+    .then(tap(commit))
+}
+
 export {
   submitLogin,
-  fetchCurrentUser,
   logoutCurrentUser,
-  populateInitial
+  populateInitial,
+  fetchProducts,
+  fetchProductById,
+  createProduct,
+  fetchAgents,
+  fetchAgentById,
+  createAgent
 }

@@ -4,11 +4,11 @@ el-card.center
   header(slot="header")
     strong Login
 
-  el-form(
-    :model="form"
-    @submit.native.prevent="submitLogin")
-    el-form-item(label="Phone")
-      el-input(v-model="form.phone")
+  el-form(:model="form")
+
+    el-form-item(label="Id")
+      el-input(v-model="form._id")
+
     el-form-item(label="Password")
       el-input(type="password"
         v-model="form.password")

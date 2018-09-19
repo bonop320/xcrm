@@ -8,13 +8,15 @@ el-table(
   el-table-column(
     prop="book"
     label="Book")
-    template(slot-scope="scope")
-      span {{ scope.row.agent.name }}
+    <!-- template(slot-scope="scope") -->
+    <!--   span {{ scope.row.agent.name }} -->
 
-  el-table-column(label="Product")
-    template(slot-scope="scope")
-      router-link(:to="{ name: 'view-products-one', params: { _id: scope.row.subject } }")
-        | {{ scope.row.product.name }}
+  el-table-column(
+    prop="subject"
+    label="Product")
+    <!-- template(slot-scope="scope") -->
+    <!--   router-link(:to="{ name: 'view-products-one', params: { _id: scope.row.subject } }") -->
+    <!--     span {{ scope.row.product.name }} -->
 
   el-table-column(
     align="right"

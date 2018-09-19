@@ -35,7 +35,7 @@ function beforeMount () {
     this.isReady = true
   }
 
-  if (!this.token) return setReady()
+  if (!this.user) return setReady()
 
   this
     .populateInitial()

@@ -1,20 +1,18 @@
-import { mapGetters } from 'vuex'
+import { mapState } from 'vuex'
 
 import AgentTable from '@/components/agent-table'
 import AgentForm from '@/components/agent-form'
 
-import * as methods from './methods'
+import methods from './methods'
 
 const data = () => ({
   isCreating: false
 })
 
-const computed = mapGetters('users', {
-  'agents': 'allAgents'
-})
+const computed = mapState(['agents'])
 
 function mounted () {
-  this.fetchAll()
+  this.fetchAgents()
 }
 
 export default {

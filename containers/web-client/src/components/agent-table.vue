@@ -1,18 +1,21 @@
 <template lang="pug">
-el-row(:gutter="20")
-  el-table(:data="members")
-    el-table-column(
-      prop="name"
-      label="Name")
+el-table(:data="members")
+  el-table-column(
+    prop="_id"
+    label="User ID")
 
-    el-table-column(
-      prop="phone"
-      label="Phone")
+  el-table-column(
+    prop="name"
+    label="Name")
 
-    el-table-column(
-      align="right"
-      prop="totalPayable"
-      label="Total Receivable")
+  el-table-column(
+    prop="phone"
+    label="Phone")
+
+  el-table-column(
+    align="right"
+    prop="totalPayable"
+    label="Total Receivable")
 </template>
 
 <script>
@@ -25,9 +28,3 @@ export default {
   props
 }
 </script>
-
-<style scoped>
-.el-col {
-  margin-bottom: 20px;
-}
-</style>
