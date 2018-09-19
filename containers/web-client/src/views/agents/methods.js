@@ -1,8 +1,8 @@
 import { mapActions } from 'vuex'
 
-const { fetchAll, createOne } = mapActions('users', [
-  'fetchAll',
-  'createOne'
+const actions = mapActions([
+  'fetchAgents',
+  'createAgent'
 ])
 
 function showCreateModal () {
@@ -20,13 +20,12 @@ function submitCreate (data) {
   }
 
   this
-    .createOne(data)
+    .createAgent(data)
     .then(onSuccess)
 }
 
-export {
+export default {
+  ...actions,
   showCreateModal,
-  submitCreate,
-  fetchAll,
-  createOne
+  submitCreate
 }

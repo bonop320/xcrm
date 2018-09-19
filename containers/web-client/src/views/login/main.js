@@ -1,10 +1,7 @@
 import { mapActions } from 'vuex'
 
 const data = () => ({
-  form: {
-    phone: '',
-    password: ''
-  }
+  form: {}
 })
 
 const methods = {
@@ -15,13 +12,8 @@ const methods = {
   ...mapActions([ 'submitLogin' ])
 }
 
-function mounted () {
-
-}
-
 export default {
-  name: 'ViewLogin',
+  name: 'view-login',
   data,
-  methods,
-  mounted
+  methods
 }
