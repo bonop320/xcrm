@@ -84,6 +84,7 @@ const findIn = curry(
 module.exports = {
   getIn,
   putIn,
+  readIn,
   createIn,
   removeIn,
   findIn

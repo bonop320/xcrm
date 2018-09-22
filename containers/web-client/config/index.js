@@ -35,6 +35,13 @@ module.exports = {
         pathRewrite: {
           '^/cdn': ''
         }
+      },
+      '/couchdb': {
+        target: 'http://localhost:5984/',
+        changeOrigin: true,
+        pathRewrite: {
+          '^/couchdb': ''
+        }
       }
     },
 

@@ -32,6 +32,8 @@ async function populateInitial (store) {
   }
 
   await store.dispatch('fetchProducts')
+
+  await store.dispatch('txs/fetchAll')
 }
 
 function fetchAgents (store, query = {}) {
