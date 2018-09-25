@@ -1,0 +1,23 @@
+{
+  "name": "@xcrm/db-processor",
+  "version": "0.0.1",
+  "scripts": {
+    "test": "ava -vws",
+    "start": "pm2 start",
+    "dev": "nodemon processor.js"
+  },
+  "devDependencies": {
+    "ava": "^0.25.0",
+    "nodemon": "^1.18.3"
+  },
+  "dependencies": {
+    "getenv": "^0.7.0",
+    "pouchdb": "^7.0.0",
+    "pouchdb-find": "^7.0.0",
+    "pouchdb-upsert": "^2.2.0",
+    "ramda": "^0.25.0",
+    "rxjs": "^6.3.2",
+    "rxjs-compat": "^6.3.2",
+    "ulid": "^2.3.0"
+  }
+}
