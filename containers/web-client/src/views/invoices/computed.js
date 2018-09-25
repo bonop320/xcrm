@@ -33,8 +33,15 @@ function members () {
   return map(tag, this.invoices)
 }
 
+function mounted () {
+  this
+    .fetchAll()
+    .then(console.log)
+}
+
 export default {
   ...state,
   ...getters,
-  members
+  members,
+  mounted
 }

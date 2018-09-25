@@ -2,15 +2,15 @@ import {
   tap
 } from 'ramda'
 
-import request from '@/services/request'
+import {
+  findIn
+} from '@/store/db'
 
 function fetchAll (ctx) {
   const commit = arr =>
     ctx.commit('SET_ALL', arr)
 
-  return request
-    .get('/invoices')
-    .then(res => res.data)
+  return findIn('receivables', {})
     .then(tap(commit))
 }
 

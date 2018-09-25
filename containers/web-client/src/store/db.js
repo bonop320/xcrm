@@ -19,11 +19,15 @@ PouchDB
   .plugin(upsertPlugin)
 
 function getUrl () {
+  const { host } = window.location
   const { user } = state
-  return `http://localhost:8081/couchdb/node_${user._id}`
+
+  if (user) return `http://${host}/couchdb/node_${user._id}`
 }
 
-const db = new PouchDB(getUrl())
+const dbUrl = getUrl()
+
+const db = dbUrl && new PouchDB(dbUrl)
 
 // db methods
 

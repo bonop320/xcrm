@@ -12,14 +12,16 @@ function logoutCurrentUser (store) {
 }
 
 function submitLogin (store, creds) {
-  const setToken = data =>
+  const setToken = data => {
     store.commit('SET_TOKEN', data.token)
+  }
 
   const done = _ =>
     window.location.reload(true)
 
   return request
     .post('/tokens', creds)
+    .then(res => res.data)
     .then(setToken)
     .then(done)
 }
