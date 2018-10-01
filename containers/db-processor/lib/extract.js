@@ -1,23 +1,17 @@
 const { Observable } = require('rxjs/Rx')
 
 const {
-  tap,
-  identity,
-  pluck,
   map,
-  merge,
-  always
+  path,
+  identity
 } = require('ramda')
 
 const dbOf = require('./db')
 
-function main () {
-  const db = dbOf('node_admin')
+const entriesOf = path(['doc', 'entries'])
 
-  const pack = ([body]) => ({
-    source: 'admin',
-    doc: body.doc
-  })
+function main () {
+  const db = dbOf('txs')
 
   const options = {
     since: 'now',
@@ -30,7 +24,9 @@ function main () {
 
   return Observable
     .fromEvent(changes, 'change')
-    .map(pack)
+    .flatMap(map(entriesOf))
+    .filter(identity)
+    .flatMap(identity)
 }
 
 module.exports = main
